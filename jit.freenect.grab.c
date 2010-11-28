@@ -30,6 +30,10 @@
 #define RGB_HEIGHT 480
 #define MAX_DEVICES 8
 
+#define JIT_FREENECT_CAPTURE_LEVEL_ALL 0
+#define JIT_FREENECT_CAPTURE_LEVEL_DEPTH 1
+#define JIT_FREENECT_CAPTURE_LEVEL_RGB 2
+
 typedef union _lookup_data{
 	long *l_ptr;
 	float *f_ptr;
@@ -45,25 +49,26 @@ enum thread_mess_type{
 
 typedef struct _jit_freenect_grab
 {
-	t_object         ob;
-	char             unique;
-	char             mode;
-	char             has_frames;
-	long             index;
-	long             ndevices;
-	freenect_device  *device;
-	uint32_t         timestamp;
-	t_lookup         lut;
-	t_symbol         *lut_type;
-	double             tilt;
-	long             accelcount;
-	double           mks_accel[3];
-	freenect_pixel   *rgb_data;
-	freenect_depth   *depth_data;
-	uint32_t         rgb_timestamp;
-	uint32_t         depth_timestamp;
-	char             have_frames;
-	freenect_raw_device_state* state;
+	t_object					ob;
+	char						unique;
+	char						mode;
+	char						has_frames;
+	long						index;
+	long						ndevices;
+	freenect_device				*device;
+	uint32_t					timestamp;
+	t_lookup					lut;
+	t_symbol					*lut_type;
+	double						tilt;
+	long						accelcount;
+	double						mks_accel[3];
+	freenect_pixel				*rgb_data;
+	freenect_depth				*depth_data;
+	uint32_t					rgb_timestamp;
+	uint32_t					depth_timestamp;
+	char						have_frames;
+	freenect_raw_device_state*	state;
+	char						capture_level;
 	
 } t_jit_freenect_grab;
 
@@ -88,6 +93,8 @@ void					jit_freenect_set_tilt(t_jit_freenect_grab *x,  void *attr, long argc, t
 t_jit_err				jit_freenect_get_tilt(t_jit_freenect_grab *x, void *attr, long *ac, t_atom **av);
 
 t_jit_err               jit_freenect_set_mode(t_jit_freenect_grab *x, void *attr, long ac, t_atom *av);
+
+t_jit_err               jit_freenect_set_capture_level(t_jit_freenect_grab *x, void *attr, long ac, t_atom *av);
 
 t_jit_err               jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, void *outputs);
 void                    copy_depth_data(freenect_depth *source, char *out_bp, t_jit_matrix_info *dest_info, t_lookup *lut);
@@ -358,6 +365,10 @@ t_jit_err jit_freenect_grab_init(void)
 	attr = (t_jit_object *)jit_object_new(_jit_sym_jit_attr_offset,"mode",_jit_sym_char,
 										  attrflags,(method)NULL,(method)jit_freenect_set_mode,calcoffset(t_jit_freenect_grab,mode));
 	jit_class_addattr(_jit_freenect_grab_class,attr);
+
+	attr = (t_jit_object *)jit_object_new(_jit_sym_jit_attr_offset,"capture_level",_jit_sym_char,
+										  attrflags,(method)NULL,(method)jit_freenect_set_capture_level,calcoffset(t_jit_freenect_grab,capture_level));
+	jit_class_addattr(_jit_freenect_grab_class,attr);
 	
 	attr = (t_jit_object *)jit_object_new(_jit_sym_jit_attr_offset,"tilt",_jit_sym_float64,
 										  attrflags,(method)jit_freenect_get_tilt,(method)jit_freenect_set_tilt,calcoffset(t_jit_freenect_grab,tilt));
@@ -503,6 +514,20 @@ t_jit_err jit_freenect_set_mode(t_jit_freenect_grab *x, void *attr, long ac, t_a
 	
     return JIT_ERR_NONE;
 }
+
+t_jit_err jit_freenect_set_capture_level(t_jit_freenect_grab *x, void *attr, long ac, t_atom *av){
+    if(ac < 1){
+        return JIT_ERR_NONE;
+    }
+	
+	if(x->capture_level != jit_atom_getlong(av)){
+		x->capture_level = jit_atom_getlong(av);
+		CLIP(x->capture_level, 0, 3);
+	}
+	
+    return JIT_ERR_NONE;
+}
+
 
 void jit_freenect_set_tilt(t_jit_freenect_grab *x,  void *attr, long argc, t_atom *argv)
 {
@@ -718,8 +743,11 @@ t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, vo
 			x->timestamp = MAX(x->rgb_timestamp,x->depth_timestamp);
 			x->has_frames = 1; //We have new frames to output in "unique" mode
 			
-			copy_depth_data(x->depth_data, depth_bp, &depth_minfo, &x->lut);
-			copy_rgb_data(x->rgb_data, rgb_bp, &rgb_minfo);
+			if ((x->capture_level==JIT_FREENECT_CAPTURE_LEVEL_ALL)||(x->capture_level==JIT_FREENECT_CAPTURE_LEVEL_DEPTH))
+				copy_depth_data(x->depth_data, depth_bp, &depth_minfo, &x->lut);
+			
+			if ((x->capture_level==JIT_FREENECT_CAPTURE_LEVEL_ALL)||(x->capture_level==JIT_FREENECT_CAPTURE_LEVEL_RGB))
+				copy_rgb_data(x->rgb_data, rgb_bp, &rgb_minfo);
 		}
 		
 	} else {
