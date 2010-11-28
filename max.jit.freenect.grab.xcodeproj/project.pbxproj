@@ -9,15 +9,12 @@
 /* Begin PBXBuildFile section */
 		8D01CCCE0486CAD60068D4B7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */; };
 		B43600621293FD7500228EA0 /* JitterAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B43600611293FD7500228EA0 /* JitterAPI.framework */; };
-<<<<<<< HEAD
-=======
 		B4578CBC129CAF17004A0DF2 /* cameras.c in Sources */ = {isa = PBXBuildFile; fileRef = B4578CB6129CAF17004A0DF2 /* cameras.c */; };
 		B4578CBD129CAF17004A0DF2 /* core.c in Sources */ = {isa = PBXBuildFile; fileRef = B4578CB7129CAF17004A0DF2 /* core.c */; };
 		B4578CBE129CAF17004A0DF2 /* freenect_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = B4578CB8129CAF17004A0DF2 /* freenect_internal.h */; };
 		B4578CBF129CAF17004A0DF2 /* tilt.c in Sources */ = {isa = PBXBuildFile; fileRef = B4578CB9129CAF17004A0DF2 /* tilt.c */; };
 		B4578CC0129CAF17004A0DF2 /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = B4578CBA129CAF17004A0DF2 /* usb_libusb10.c */; };
 		B4578CC1129CAF17004A0DF2 /* usb_libusb10.h in Headers */ = {isa = PBXBuildFile; fileRef = B4578CBB129CAF17004A0DF2 /* usb_libusb10.h */; };
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 		B4793DA51299030800A44AF1 /* core.c in Sources */ = {isa = PBXBuildFile; fileRef = B4793DA11299030800A44AF1 /* core.c */; };
 		B4793DA61299030800A44AF1 /* descriptor.c in Sources */ = {isa = PBXBuildFile; fileRef = B4793DA21299030800A44AF1 /* descriptor.c */; };
 		B4793DA71299030800A44AF1 /* io.c in Sources */ = {isa = PBXBuildFile; fileRef = B4793DA31299030800A44AF1 /* io.c */; };
@@ -27,34 +24,19 @@
 		B4B4AEF61293DBE600B34CB3 /* jit.freenect.grab.c in Sources */ = {isa = PBXBuildFile; fileRef = B4B4AEF41293DBE600B34CB3 /* jit.freenect.grab.c */; };
 		B4B4AEF71293DBE600B34CB3 /* max.jit.freenect.grab.c in Sources */ = {isa = PBXBuildFile; fileRef = B4B4AEF51293DBE600B34CB3 /* max.jit.freenect.grab.c */; };
 		B4BFD6B51294CE0400BACB4B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4BFD6B41294CE0400BACB4B /* IOKit.framework */; };
-<<<<<<< HEAD
-		FECB0888129B24070015FFB5 /* freenect_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = FECB0882129B24070015FFB5 /* freenect_internal.h */; };
-		FECB0889129B24070015FFB5 /* usb_libusb10.h in Headers */ = {isa = PBXBuildFile; fileRef = FECB0883129B24070015FFB5 /* usb_libusb10.h */; };
-		FECB088A129B24070015FFB5 /* cameras.c in Sources */ = {isa = PBXBuildFile; fileRef = FECB0884129B24070015FFB5 /* cameras.c */; };
-		FECB088B129B24070015FFB5 /* core.c in Sources */ = {isa = PBXBuildFile; fileRef = FECB0885129B24070015FFB5 /* core.c */; };
-		FECB088C129B24070015FFB5 /* tilt.c in Sources */ = {isa = PBXBuildFile; fileRef = FECB0886129B24070015FFB5 /* tilt.c */; };
-		FECB088D129B24070015FFB5 /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = FECB0887129B24070015FFB5 /* usb_libusb10.c */; };
-		FECB088F129B24330015FFB5 /* MaxAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FECB088E129B24330015FFB5 /* MaxAPI.framework */; };
-		FECB08D8129B24D30015FFB5 /* inits.txt in Resources */ = {isa = PBXBuildFile; fileRef = FECB08D7129B24D30015FFB5 /* inits.txt */; };
-		FECB091C129B27DF0015FFB5 /* inits.c in Sources */ = {isa = PBXBuildFile; fileRef = FECB091B129B27DF0015FFB5 /* inits.c */; };
-=======
 		FE0C1A5512A30E3800A84E34 /* MaxAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE0C1A5412A30E3800A84E34 /* MaxAPI.framework */; };
 		FE0C1AA012A30ECB00A84E34 /* accel.c in Sources */ = {isa = PBXBuildFile; fileRef = FE0C1A9F12A30ECB00A84E34 /* accel.c */; };
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		B43600611293FD7500228EA0 /* JitterAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JitterAPI.framework; path = "../c74support/jit-includes/JitterAPI.framework"; sourceTree = SOURCE_ROOT; };
-<<<<<<< HEAD
-=======
 		B4578CB6129CAF17004A0DF2 /* cameras.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cameras.c; path = ../libfreenect/src/cameras.c; sourceTree = SOURCE_ROOT; };
 		B4578CB7129CAF17004A0DF2 /* core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = core.c; path = ../libfreenect/src/core.c; sourceTree = SOURCE_ROOT; };
 		B4578CB8129CAF17004A0DF2 /* freenect_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = freenect_internal.h; path = ../libfreenect/src/freenect_internal.h; sourceTree = SOURCE_ROOT; };
 		B4578CB9129CAF17004A0DF2 /* tilt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tilt.c; path = ../libfreenect/src/tilt.c; sourceTree = SOURCE_ROOT; };
 		B4578CBA129CAF17004A0DF2 /* usb_libusb10.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = usb_libusb10.c; path = ../libfreenect/src/usb_libusb10.c; sourceTree = SOURCE_ROOT; };
 		B4578CBB129CAF17004A0DF2 /* usb_libusb10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = usb_libusb10.h; path = ../libfreenect/src/usb_libusb10.h; sourceTree = SOURCE_ROOT; };
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 		B4793DA11299030800A44AF1 /* core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = core.c; path = ../libusb/libusb/core.c; sourceTree = SOURCE_ROOT; };
 		B4793DA21299030800A44AF1 /* descriptor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = descriptor.c; path = ../libusb/libusb/descriptor.c; sourceTree = SOURCE_ROOT; };
 		B4793DA31299030800A44AF1 /* io.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = io.c; path = ../libusb/libusb/io.c; sourceTree = SOURCE_ROOT; };
@@ -65,21 +47,8 @@
 		B4B4AEF51293DBE600B34CB3 /* max.jit.freenect.grab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = max.jit.freenect.grab.c; sourceTree = "<group>"; };
 		B4B4AEF81293DBE600B34CB3 /* jit.freenect.grab.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jit.freenect.grab.mxo; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4BFD6B41294CE0400BACB4B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
-<<<<<<< HEAD
-		FECB0882129B24070015FFB5 /* freenect_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = freenect_internal.h; path = ../libfreenect/c/lib/freenect_internal.h; sourceTree = SOURCE_ROOT; };
-		FECB0883129B24070015FFB5 /* usb_libusb10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = usb_libusb10.h; path = ../libfreenect/c/lib/usb_libusb10.h; sourceTree = SOURCE_ROOT; };
-		FECB0884129B24070015FFB5 /* cameras.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cameras.c; path = ../libfreenect/c/lib/cameras.c; sourceTree = SOURCE_ROOT; };
-		FECB0885129B24070015FFB5 /* core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = core.c; path = ../libfreenect/c/lib/core.c; sourceTree = SOURCE_ROOT; };
-		FECB0886129B24070015FFB5 /* tilt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tilt.c; path = ../libfreenect/c/lib/tilt.c; sourceTree = SOURCE_ROOT; };
-		FECB0887129B24070015FFB5 /* usb_libusb10.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = usb_libusb10.c; path = ../libfreenect/c/lib/usb_libusb10.c; sourceTree = SOURCE_ROOT; };
-		FECB088E129B24330015FFB5 /* MaxAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MaxAPI.framework; path = "../c74support/max-includes/MaxAPI.framework"; sourceTree = SOURCE_ROOT; };
-		FECB08D7129B24D30015FFB5 /* inits.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = inits.txt; path = ../libfreenect/c/lib/inits.txt; sourceTree = SOURCE_ROOT; };
-		FECB091B129B27DF0015FFB5 /* inits.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = inits.c; path = ../libfreenect/c/build/lib/inits.c; sourceTree = SOURCE_ROOT; };
-		FEFBCB39129DEAEA00AD3036 /* glview.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = glview.c; path = libfreenect/c/examples/glview.c; sourceTree = SYSTEM_DEVELOPER_DIR; };
-=======
 		FE0C1A5412A30E3800A84E34 /* MaxAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MaxAPI.framework; path = "../c74support/max-includes/MaxAPI.framework"; sourceTree = SOURCE_ROOT; };
 		FE0C1A9F12A30ECB00A84E34 /* accel.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = accel.c; path = ../libfreenect/src/accel.c; sourceTree = SOURCE_ROOT; };
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,11 +59,7 @@
 				8D01CCCE0486CAD60068D4B7 /* Carbon.framework in Frameworks */,
 				B43600621293FD7500228EA0 /* JitterAPI.framework in Frameworks */,
 				B4BFD6B51294CE0400BACB4B /* IOKit.framework in Frameworks */,
-<<<<<<< HEAD
-				FECB088F129B24330015FFB5 /* MaxAPI.framework in Frameworks */,
-=======
 				FE0C1A5512A30E3800A84E34 /* MaxAPI.framework in Frameworks */,
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,11 +82,7 @@
 		089C1671FE841209C02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				FECB088E129B24330015FFB5 /* MaxAPI.framework */,
-=======
 				FE0C1A5412A30E3800A84E34 /* MaxAPI.framework */,
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 				B43600611293FD7500228EA0 /* JitterAPI.framework */,
 				08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */,
 				B4BFD6B41294CE0400BACB4B /* IOKit.framework */,
@@ -169,17 +130,6 @@
 		B4B4AF031293DC7C00B34CB3 /* freenect source */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				FEFBCB39129DEAEA00AD3036 /* glview.c */,
-				FECB091B129B27DF0015FFB5 /* inits.c */,
-				FECB08D7129B24D30015FFB5 /* inits.txt */,
-				FECB0882129B24070015FFB5 /* freenect_internal.h */,
-				FECB0883129B24070015FFB5 /* usb_libusb10.h */,
-				FECB0884129B24070015FFB5 /* cameras.c */,
-				FECB0885129B24070015FFB5 /* core.c */,
-				FECB0886129B24070015FFB5 /* tilt.c */,
-				FECB0887129B24070015FFB5 /* usb_libusb10.c */,
-=======
 				FE0C1A9F12A30ECB00A84E34 /* accel.c */,
 				B4578CB6129CAF17004A0DF2 /* cameras.c */,
 				B4578CB7129CAF17004A0DF2 /* core.c */,
@@ -187,7 +137,6 @@
 				B4578CB9129CAF17004A0DF2 /* tilt.c */,
 				B4578CBA129CAF17004A0DF2 /* usb_libusb10.c */,
 				B4578CBB129CAF17004A0DF2 /* usb_libusb10.h */,
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 			);
 			name = "freenect source";
 			sourceTree = "<group>";
@@ -200,13 +149,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4793DB31299035F00A44AF1 /* config.h in Headers */,
-<<<<<<< HEAD
-				FECB0888129B24070015FFB5 /* freenect_internal.h in Headers */,
-				FECB0889129B24070015FFB5 /* usb_libusb10.h in Headers */,
-=======
 				B4578CBE129CAF17004A0DF2 /* freenect_internal.h in Headers */,
 				B4578CC1129CAF17004A0DF2 /* usb_libusb10.h in Headers */,
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,7 +205,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FECB08D8129B24D30015FFB5 /* inits.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,19 +232,11 @@
 				B4793DA71299030800A44AF1 /* io.c in Sources */,
 				B4793DA81299030800A44AF1 /* sync.c in Sources */,
 				B4793DDA129904AC00A44AF1 /* darwin_usb.c in Sources */,
-<<<<<<< HEAD
-				FECB088A129B24070015FFB5 /* cameras.c in Sources */,
-				FECB088B129B24070015FFB5 /* core.c in Sources */,
-				FECB088C129B24070015FFB5 /* tilt.c in Sources */,
-				FECB088D129B24070015FFB5 /* usb_libusb10.c in Sources */,
-				FECB091C129B27DF0015FFB5 /* inits.c in Sources */,
-=======
 				B4578CBC129CAF17004A0DF2 /* cameras.c in Sources */,
 				B4578CBD129CAF17004A0DF2 /* core.c in Sources */,
 				B4578CBF129CAF17004A0DF2 /* tilt.c in Sources */,
 				B4578CC0129CAF17004A0DF2 /* usb_libusb10.c in Sources */,
 				FE0C1AA012A30ECB00A84E34 /* accel.c in Sources */,
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,12 +291,7 @@
 				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../libusb/libusb\"";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /build/development/;
-				LIBRARY_SEARCH_PATHS = (
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
-				);
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/lib\"";
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(DEVELOPER_DIR)/libfreenect/c/build/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/lib\"";
 				LIBRARY_STYLE = Bundle;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -400,10 +330,7 @@
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../c74support/jit-includes\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(DEVELOPER_DIR)/c74support/max-includes\"";
-<<<<<<< HEAD
-=======
 				GCC_AUTO_VECTORIZATION = YES;
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_ENABLE_SSE41_EXTENSIONS = YES;
@@ -432,12 +359,7 @@
 				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../libusb/libusb\"";
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /build/deployment/;
-				LIBRARY_SEARCH_PATHS = (
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
-				);
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/lib\"";
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(DEVELOPER_DIR)/libfreenect/c/build/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/lib\"";
 				LIBRARY_STYLE = Bundle;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -460,73 +382,6 @@
 			};
 			name = Deployment;
 		};
-<<<<<<< HEAD
-		0FF65FF3096B38E400E9E0B4 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = i386;
-				DEPLOYMENT_LOCATION = YES;
-				DSTROOT = "$(PROJECT_DIR)";
-				FRAMEWORK_SEARCH_PATHS = (
-					/Library/Frameworks,
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
-				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../c74support/jit-includes\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(DEVELOPER_DIR)/c74support/max-includes\"";
-				GCC_ENABLE_TRIGRAPHS = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "../c74support/max-includes/macho-prefix.pch";
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GENERATE_PKGINFO_FILE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
-					"/usr/local/include/libusb-1.0/",
-				);
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../OpenKinect-libfreenect/c/include\"";
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../c74support/jit-includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../c74support/max-includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../c74support/max-includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../c74support/jit-includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_6 = "\"$(SRCROOT)/../libfreenect/c/include\"";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "/../../../sysbuild/$(CONFIGURATION)/Cycling '74/jitter-externals";
-				LIBRARY_SEARCH_PATHS = (
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
-				);
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/lib\"";
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(DEVELOPER_DIR)/libfreenect/c/build/lib\"";
-				LIBRARY_STYLE = Bundle;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-Wl",
-					"-search_paths_first",
-					"-lmx",
-				);
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = jit.freenect.grab;
-				SDKROOT = "";
-				SECTORDER_FLAGS = "";
-				USER_HEADER_SEARCH_PATHS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = mxo;
-			};
-			name = Default;
-		};
-=======
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 		0FF65FF5096B38E400E9E0B4 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
