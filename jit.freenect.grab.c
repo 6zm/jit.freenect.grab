@@ -30,43 +30,11 @@
 #define RGB_HEIGHT 480
 #define MAX_DEVICES 8
 
-<<<<<<< HEAD
-#define set_float4(a,b) {int vector_iterator;for(vector_iterator=0;vector_iterator<4;vector_iterator++)a[vector_iterator]= b;}
-#define set_char16(a,b) {int vector_iterator;for(vector_iterator=0;vector_iterator<16;vector_iterator++)a[vector_iterator]= b;}
-
-#define copy_float4(a,b) {int vector_iterator;for(vector_iterator=0;vector_iterator<4;vector_iterator++)b[vector_iterator] = a[vector_iterator];}
-#define copy_char16(a,b) {int vector_iterator;for(vector_iterator=0;vector_iterator<16;vector_iterator++)b[vector_iterator] = a[vector_iterator];}
-
-#define mult_scalar_float4(a,b,c) {int vector_iterator;for(vector_iterator=0;vector_iterator<4;vector_iterator++)c[vector_iterator]= a[vector_iterator] * b;}
-
-typedef struct _jit_freenect_grab
-{
-	t_object		ob;
-	char unique;
-	char mode;
-	freenect_device *device;
-	uint32_t timestamp;
-	long tilt;
-	long raw_accel[3];
-	double mks_accel[3];
-	
-} t_jit_freenect_grab;
-
-typedef struct _grab_data
-{
-	freenect_pixel *rgb_data;
-	freenect_depth *depth_data;
-	freenect_device *device;
-	uint32_t index;
-	uint32_t timestamp;
-} t_grab_data;
-=======
 typedef union _lookup_data{
 	long *l_ptr;
 	float *f_ptr;
 	double *d_ptr;
 }t_lookup;
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 
 enum thread_mess_type{
 	NONE,
@@ -107,25 +75,9 @@ typedef struct _obj_list
 
 void *_jit_freenect_grab_class;
 
-<<<<<<< HEAD
-t_jit_err 				jit_freenect_grab_init(void);
-t_jit_freenect_grab		*jit_freenect_grab_new(void);
-void 					jit_freenect_grab_free(t_jit_freenect_grab *x);
-t_jit_err 				jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, void *outputs);
-void					jit_freenect_open(t_jit_freenect_grab *x, t_symbol *s, long argc, t_atom *argv);
-void					jit_freenect_close(t_jit_freenect_grab *x, t_symbol *s, long argc, t_atom *argv);
-void					jit_freenect_tilt(t_jit_freenect_grab *x,  void *attr, long argc, t_atom *argv);
-void					jit_freenect_accel(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_atom *argv);
-
-void					rgb_callback(freenect_device *dev, freenect_pixel *pixels, uint32_t timestamp);
-void					depth_callback(freenect_device *dev, freenect_depth *pixels, uint32_t timestamp);
-void					copy_depth_data(freenect_depth *source, char *out_bp, t_jit_matrix_info *dest_info);
-void					copy_rgb_data(freenect_pixel *source, char *out_bp, t_jit_matrix_info *dest_info);
-=======
 t_jit_err               jit_freenect_grab_init(void);
 t_jit_freenect_grab     *jit_freenect_grab_new(void);
 void                    jit_freenect_grab_free(t_jit_freenect_grab *x);
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 
 void                    jit_freenect_open(t_jit_freenect_grab *x, t_symbol *s, long argc, t_atom *argv);
 void                    jit_freenect_close(t_jit_freenect_grab *x, t_symbol *s, long argc, t_atom *argv);
@@ -149,23 +101,11 @@ int terminate_thread;
 
 int object_count = 0;
 
-<<<<<<< HEAD
-void *capture_threadfunc(void *arg)
-{
-	int done = 0;
-	freenect_context *f_ctx = NULL;
-	freenect_device *f_dev = NULL;
-	//freenect_device *f_dev = NULL;
-	
-	//printf("Entering grabber thread.\n");
-	//post("Thread in.");
-=======
 freenect_context *f_ctx = NULL;
 t_obj_list       object_list;
 
 static int obj_list_push(t_obj_list *list, t_jit_freenect_grab *x){
 	t_jit_freenect_grab **tmp;
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 	
 	if(!list){
 		error("obj_list_push: invalid pointer.");
@@ -210,17 +150,6 @@ static int obj_list_remove_item(t_obj_list *list, t_jit_freenect_grab *x){
 		list->objects = NULL;
 	}
 	
-<<<<<<< HEAD
-	//freenect_set_led(f_dev,LED_GREEN);	//freenect_set_tilt_degs(f_dev,0);
-	
-
-	
-	while(!done && freenect_process_events(f_ctx) >= 0){
-		pthread_mutex_lock(&mutex);
-		if(message.type == TERMINATE){
-			done = 1;
-			message.type = NONE;
-=======
 	return list->count;
 }
 
@@ -257,7 +186,6 @@ void calculate_lut(t_lookup *lut, t_symbol *type, int mode){
 					lut->f_ptr[i] = 100.f / (3.33f + (float)i * -0.00307f);
 				} 
 				break;
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 		}
 	}
 	else if(type == _jit_sym_long){
@@ -373,13 +301,8 @@ t_jit_err jit_freenect_grab_init(void)
 	long attrflags=0;
 	t_jit_object *attr;
 	t_jit_object *mop,*output;
-<<<<<<< HEAD
-	t_atom a[1];
-
-=======
 	t_atom a[4];
 	
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 	_jit_freenect_grab_class = jit_class_new("jit_freenect_grab",(method)jit_freenect_grab_new,(method)jit_freenect_grab_free, sizeof(t_jit_freenect_grab),0L);
   	
 	//add mop
@@ -422,8 +345,6 @@ t_jit_err jit_freenect_grab_init(void)
 	//add methods
 	jit_class_addmethod(_jit_freenect_grab_class, (method)jit_freenect_open, "open", A_GIMME, 0L);
 	jit_class_addmethod(_jit_freenect_grab_class, (method)jit_freenect_close, "close", A_GIMME, 0L);
-	jit_class_addmethod(_jit_freenect_grab_class, (method)jit_freenect_accel, "accel", A_GIMME, 0L);
-
 	
 	jit_class_addmethod(_jit_freenect_grab_class, (method)jit_freenect_grab_matrix_calc, "matrix_calc", A_CANT, 0L);
 	
@@ -438,23 +359,9 @@ t_jit_err jit_freenect_grab_init(void)
 										  attrflags,(method)NULL,(method)jit_freenect_set_mode,calcoffset(t_jit_freenect_grab,mode));
 	jit_class_addattr(_jit_freenect_grab_class,attr);
 	
-<<<<<<< HEAD
-	attr = (t_jit_object *)jit_object_new(_jit_sym_jit_attr_offset,"tilt",_jit_sym_long,attrflags,(method)NULL,(method)jit_freenect_tilt,calcoffset(t_jit_freenect_grab,tilt));
-	jit_attr_addfilterset_clip(attr,-30,30,TRUE,TRUE);
-	jit_class_addattr(_jit_freenect_grab_class,attr);
-	
-	//attrflags = JIT_ATTR_GET_DEFER_LOW | JIT_ATTR_SET_OPAQUE;
-	
-	
-
-	jit_class_addmethod(_jit_freenect_grab_class, (method)jit_object_register, 	"register",			A_CANT, 0L); // can register
-	
-	jit_class_register(_jit_freenect_grab_class);
-=======
 	attr = (t_jit_object *)jit_object_new(_jit_sym_jit_attr_offset,"tilt",_jit_sym_float64,
 										  attrflags,(method)jit_freenect_get_tilt,(method)jit_freenect_set_tilt,calcoffset(t_jit_freenect_grab,tilt));
 	jit_class_addattr(_jit_freenect_grab_class,attr);
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 	
 	attrflags = JIT_ATTR_GET_DEFER_LOW | JIT_ATTR_SET_OPAQUE;
 	attr = (t_jit_object *)jit_object_new(_jit_sym_jit_attr_offset,"index",_jit_sym_long,
@@ -470,13 +377,6 @@ t_jit_err jit_freenect_grab_init(void)
 										  calcoffset(t_jit_freenect_grab, accelcount),calcoffset(t_jit_freenect_grab,mks_accel));
 	jit_class_addattr(_jit_freenect_grab_class,attr);
 	
-<<<<<<< HEAD
-	if (pthread_create(&capture_thread, NULL, capture_threadfunc, NULL)) {
-		error("Failed to create capture thread.\n");
-		return JIT_ERR_GENERIC;
-	}
- 
-=======
 	attrflags = JIT_ATTR_GET_OPAQUE_USER | JIT_ATTR_SET_OPAQUE_USER;
 	attr = (t_jit_object *)jit_object_new(_jit_sym_jit_attr_offset,"has_frames",_jit_sym_char,
 										  attrflags,(method)NULL,(method)NULL,calcoffset(t_jit_freenect_grab,has_frames));
@@ -487,7 +387,6 @@ t_jit_err jit_freenect_grab_init(void)
 	object_list.objects = NULL;
 	object_list.count = 0;
 	
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 	return JIT_ERR_NONE;
 }
 
@@ -514,14 +413,7 @@ t_jit_freenect_grab *jit_freenect_grab_new(void)
 			}
 		}
 		
-<<<<<<< HEAD
-		object_count++;
-		post("Object count: %d", object_count);
-		
-
-=======
 		obj_list_push(&object_list, x);
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 		
 	} else {
 		x = NULL;
@@ -569,99 +461,6 @@ t_jit_err jit_freenect_grab_get_ndevices(t_jit_freenect_grab *x, void *attr, lon
 	return JIT_ERR_NONE;
 }
 
-<<<<<<< HEAD
-void jit_freenect_accel(t_jit_freenect_grab *x, t_symbol *s, long argc, t_atom *argv)
-{
-	
-	// mode 0 - raw, 1 - mks
-	int mode=0;
-	
-	if (jit_atom_getsym(argv)==gensym("mks")) mode=1;
-	
-		t_atom acc[3];
-	
-	
-	int i;
-	if (x->device){
-		for(i=0;i<MAX_DEVICES;i++){
-			if(device_data[i].device == x->device){
-				
-				if(x->device){
-					
-					if (mode==0){
-						int16_t ax,ay,az;
-						freenect_get_raw_accel(x->device, &ax, &ay, &az);
-						
-						jit_atom_setlong(&acc[0],ax);
-						jit_atom_setlong(&acc[1],ay);
-						jit_atom_setlong(&acc[2],az);
-						
-						jit_object_notify(x,gensym("acc_raw"), acc);
-						
-					} else {
-					
-						double dx,dy,dz;
-						freenect_get_mks_accel(x->device, &dx, &dy, &dz);
-						
-						jit_atom_setfloat(&acc[0],dx);
-						jit_atom_setfloat(&acc[1],dy);
-						jit_atom_setfloat(&acc[2],dz);
-						
-						jit_object_notify(x,gensym("acc_mks"), acc);
-					
-					}
-
-					
-					break;
-				}
-				
-				
-				
-			}
-		}
-	} else jit_object_post((t_object *)x,"accel_raw:invalid device");
-			
-}
-
-
-void jit_freenect_tilt(t_jit_freenect_grab *x,  void *attr, long argc, t_atom *argv)
-{
-	
-	long tilt=0;
-	
-	if (argv)
-	{
-	
-		
-		tilt = jit_atom_getlong(argv);
-
-		x->tilt = tilt;
-			
-		int i;
-		for(i=0;i<MAX_DEVICES;i++){
-			if(device_data[i].device == x->device){
-				
-				if(x->device)
-				freenect_set_tilt_degs(x->device,x->tilt);
-				else jit_object_post((t_object *)x,"tilt:invalid device");
-				break;
-			}
-		}
-		 
-		
-
-	}
-	
-}
-
-void jit_freenect_open(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_atom *argv)
-{
-		//TODO, close/start is automatic on object destruction/creation for now,  jmp 2010/11/21
-		
-	//TODO: remove this hack on merge with jmp
-	x->device = device_data[0].device;
-
-=======
 t_jit_err jit_freenect_grab_get_accel(t_jit_freenect_grab *x, void *attr, long *ac, t_atom **av){
 	double ax=0,ay=0,az=0;
 
@@ -841,30 +640,15 @@ void jit_freenect_open(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_atom *
 	
 	freenect_start_depth(x->device);
 	freenect_start_rgb(x->device);
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 }
 
 void jit_freenect_close(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_atom *argv)
 {
-<<<<<<< HEAD
-
-
-	
-	/*
-	freenect_angle--;
-	if (freenect_angle < -30) {
-		freenect_angle = -30;
-	}
-	freenect_set_tilt_degs(x->device,freenect_angle);
-	*/
-	//TODO, close/start is automatic on object destruction/creation for now,  jmp 2010/11/21
-=======
 	if(!x->device)return;
 	post("Closing Kinect device %d", x->index);
 	freenect_set_led(x->device,LED_BLINK_GREEN);
 	freenect_close_device(x->device);
 	x->device = NULL;
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 }
 
 t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, void *outputs)

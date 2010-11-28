@@ -28,19 +28,13 @@ typedef struct _max_jit_freenect_grab
 {
 	t_object		ob;
 	void			*obex;
-<<<<<<< HEAD
-	t_symbol		*servername;
-	
-=======
 	t_atom			*av;
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 } t_max_jit_freenect_grab;
 
 t_jit_err jit_freenect_grab_init(void); 
 void *max_jit_freenect_grab_new(t_symbol *s, long argc, t_atom *argv);
 void max_jit_freenect_grab_free(t_max_jit_freenect_grab *x);
 void max_jit_freenect_grab_outputmatrix(t_max_jit_freenect_grab *x);
-void max_jit_freenect_grab_notify(t_max_jit_freenect_grab *x, t_symbol *s, t_symbol *msg, void *ob, void *data);
 
 void *max_jit_freenect_grab_class;
 
@@ -60,39 +54,15 @@ int main(void)
 
 	p = max_jit_classex_setup(calcoffset(t_max_jit_freenect_grab,obex));
 	q = jit_class_findbyname(gensym("jit_freenect_grab"));    
-    max_jit_classex_mop_wrap(p,q,MAX_JIT_MOP_FLAGS_OWN_OUTPUTMATRIX|MAX_JIT_MOP_FLAGS_OWN_JIT_MATRIX|MAX_JIT_MOP_FLAGS_OWN_NOTIFY);		
-    
-	max_jit_classex_standard_wrap(p,q,0); 	
+    max_jit_classex_mop_wrap(p,q,MAX_JIT_MOP_FLAGS_OWN_OUTPUTMATRIX|MAX_JIT_MOP_FLAGS_OWN_JIT_MATRIX);		
+    max_jit_classex_standard_wrap(p,q,0); 	
 	max_addmethod_usurp_low((method)max_jit_freenect_grab_outputmatrix, "outputmatrix");
     addmess((method)max_jit_mop_assist, "assist", A_CANT,0);
 	
-<<<<<<< HEAD
-	addmess((method)max_jit_freenect_grab_notify, "notify", A_CANT,0); 
-=======
 	ps_gethas_frames = gensym("gethas_frames");
 	ps_getunique = gensym("getunique");
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 	
 	return 0;
-}
-
-
-void max_jit_freenect_grab_notify(t_max_jit_freenect_grab *x, t_symbol *s, t_symbol *msg, void *ob, void *data)
-{
-	if ((msg==gensym("acc_raw"))||(msg==gensym("acc_mks"))) {
-
-		if (!data) {
-			error("acc_raw/mks message NULL pointer");
-			return;
-		}
-
-		max_jit_obex_dumpout(x,msg,3,(t_atom *)data); 
-	} 
-	
-	else {
-
-		max_jit_mop_notify(x,s,msg);
-	}
 }
 
 void max_jit_freenect_grab_outputmatrix(t_max_jit_freenect_grab *x)
@@ -140,8 +110,6 @@ void max_jit_freenect_grab_outputmatrix(t_max_jit_freenect_grab *x)
 
 void max_jit_freenect_grab_free(t_max_jit_freenect_grab *x)
 {
-	jit_object_detach(x->servername,x);
-	
 	max_jit_mop_free(x);
 	if(x->av){
 		jit_freebytes(x->av, 1*sizeof(t_atom));	
@@ -160,14 +128,6 @@ void *max_jit_freenect_grab_new(t_symbol *s, long argc, t_atom *argv)
 		if (o=jit_object_new(gensym("jit_freenect_grab"))) {
 			max_jit_mop_setup_simple(x,o,argc,argv);
 			max_jit_attr_args(x,argc,argv);
-<<<<<<< HEAD
-			
-
-			x->servername = jit_symbol_unique(); 
-			jit_object_method(o,_jit_sym_register,x->servername);
-			jit_object_attach(x->servername,x);
-			
-=======
 			x->av = jit_getbytes(1*sizeof(t_atom));
 			
 			if(argc){
@@ -184,7 +144,6 @@ void *max_jit_freenect_grab_new(t_symbol *s, long argc, t_atom *argv)
 					}
 				}
 			}
->>>>>>> 9ac7675ae16b954ce114f9c144d6bb3806960962
 		} else {
 			error("jit.freenect.grab: could not allocate object");
 			freeobject((t_object *)x);
