@@ -39,6 +39,8 @@
 #define JIT_FREENECT_LOG_LEVEL	FREENECT_LOG_DEBUG
 //FREENECT_LOG_FLOOD
 
+#define DEBUG_TIMESTAMP __DATE__" "__TIME__"\x0"
+
 typedef float float4[4];
 #define mult_scalar_float4(a,b,c) {int vector_iterator; for(vector_iterator=0;vector_iterator<4;vector_iterator++)c[vector_iterator] = a[vector_iterator] * b;}
 
@@ -95,10 +97,18 @@ typedef struct _jit_freenect_grab
 	long             tilt;
 	long             accelcount;
 	double           mks_accel[3];
-	uint8_t          *rgb_data, *rgb_swap;
-	uint16_t         *depth_data, *depth_swap;
+	//uint8_t          *rgb_data;
+	//uint16_t         *depth_data;
+	// back: owned by libfreenect (implicit for depth)
+	// mid: owned by callbacks, "latest frame ready"
+	// front: owned by GL, "currently being drawn"
+	uint16_t *depth_mid, *depth_front,*depth_back;
+	uint8_t *rgb_back, *rgb_mid, *rgb_front;
 	uint32_t         rgb_timestamp;
 	uint32_t         depth_timestamp;
+	int got_rgb;
+	int got_depth;
+	char			 is_open;
 	char             have_depth_frames;
 	char             have_rgb_frames;
 	char             clear_depth;
@@ -108,7 +118,7 @@ typedef struct _jit_freenect_grab
 	freenect_raw_tilt_state *state;
 	
 	t_systhread		x_systhread;					// thread reference
-	t_systhread_mutex	x_mutex;					// mutual exclusion lock for threadsafety
+	t_systhread_mutex backbuffer_mutex;
 	int				x_systhread_cancel;				// thread cancel flag
 	int				x_sleeptime;	
     
@@ -250,7 +260,7 @@ static void allocate_cloud(t_cloud *cloud){
 		cloud->count = 0; 
 	}
 }
- 
+  
 */
 
 void calculate_lut(t_lookup *lut, t_symbol *type, int mode){
@@ -535,13 +545,32 @@ t_jit_freenect_grab *jit_freenect_grab_new(void)
 		x->rgb = NULL;
         
 		x->x_systhread = NULL;
-		systhread_mutex_new(&x->x_mutex,0);
-		x->x_sleeptime = 3;
+		x->backbuffer_mutex = NULL;
+		x->x_sleeptime = 10;
+		systhread_mutex_new(&x->backbuffer_mutex, 0);
+		x->got_rgb=0;
+		x->got_depth=0;
+		x->depth_mid=NULL;
+		x->depth_front=NULL;
+		x->rgb_front=NULL;
+		x->rgb_back=NULL;
+		x->rgb_mid=NULL;
+		x->depth_back=NULL;
 		
-		//jit_freenect_restart_thread(x);
+		
+		x->depth_back = (uint16_t*)malloc(640*480*4);
+		x->depth_mid = (uint16_t*)malloc(640*480*4);
+		x->depth_front = (uint16_t*)malloc(640*480*4);
+		x->rgb_back = (uint8_t*)malloc(640*480*3);
+		x->rgb_mid = (uint8_t*)malloc(640*480*3);
+		x->rgb_front = (uint8_t*)malloc(640*480*3);
+		
+		x->is_open=0;
+		
+		//jit_fnect_restart_thread(x);
         //pthread_mutex_init(&x->cb_mutex, NULL);
 		jit_atom_setsym(&x->format, s_rgb);
-		post("new instance added");
+		post("new instance added, built on %s, sleeptime:%i",DEBUG_TIMESTAMP,x->x_sleeptime);
 	} else {
 		x = NULL;
 	}	
@@ -556,10 +585,14 @@ void jit_freenect_grab_free(t_jit_freenect_grab *x)
 	jit_freenect_thread_stop(x);
 
 	// free out mutex
-	if (x->x_mutex)
-		systhread_mutex_free(x->x_mutex);
+	if (x->backbuffer_mutex)
+		systhread_mutex_free(x->backbuffer_mutex);
 
-
+	if (x->depth_mid) free(x->depth_mid);
+	if (x->depth_front) free(x->depth_front);
+	if (x->rgb_back) free(x->rgb_back);
+	if (x->rgb_mid) free(x->rgb_mid);
+	if (x->rgb_front) free(x->rgb_front);
 			
 	if(x->lut.f_ptr){
 		free(x->lut.f_ptr);
@@ -766,13 +799,13 @@ void jit_freenect_grab_open(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_a
 		post("!f_ctx");//TODO: remove
 		
 		if (jit_freenect_restart_thread(x)!=MAX_ERR_NONE) {
+			
 		//if (pthread_create(&capture_thread, NULL, capture_threadfunc, NULL)) {
 			error("Failed to create capture thread.");
 			return;
 		}
 		int bailout=0;
 		while((!f_ctx)&&(++bailout<100)){
-			// TODO: POSSIBLE DEADLOCK, CHECK TIS STUFF FELLA!
 			//systhread_sleep(1);
 			sleep(0);
 			//post("deadlocking in the sun %i",bailout);//TODO: remove
@@ -857,6 +890,8 @@ void jit_freenect_grab_open(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_a
 			post("device open");//TODO: remove
 		}
 
+	//freenect_set_depth_buffer(x->device, x->depth_back);
+	//freenect_set_video_buffer(x->device, x->rgb_back);
 	
 	freenect_set_depth_callback(x->device, depth_callback);
 	freenect_set_video_callback(x->device, rgb_callback);
@@ -890,19 +925,28 @@ void jit_freenect_grab_open(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_a
 	
 	freenect_start_depth(x->device);
 	freenect_start_video(x->device);
+	
+	x->is_open = 1;
 }
 
 void jit_freenect_grab_close(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_atom *argv)
 {
+	x->is_open = 0;
+	post("closing device...");//TODO:r
+	
 	if(!x->device)return;
+	//freenect_stop_depth(x->device);
+	//freenect_stop_video(x->device);
 	freenect_set_led(x->device,LED_BLINK_GREEN);
 	freenect_close_device(x->device);
 	x->device = NULL;
 
 	if(!f_ctx->first){
+		post("stopping thread...");
 		jit_freenect_thread_stop(x);
 	}
 
+	
 }
 
 t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, void *outputs)
@@ -913,12 +957,46 @@ t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, vo
 	void *depth_matrix,*rgb_matrix;
 	char *depth_bp, *rgb_bp;
 	
-	systhread_mutex_lock(x->x_mutex);
+	uint8_t *tmp8;
+	uint16_t *tmp16;
+	
+	int has_new_frame = 0;
+	int sync_to_depth = 0;
+	
+	
+
 	
 	depth_matrix = jit_object_method(outputs,_jit_sym_getindex,0);
 	rgb_matrix = jit_object_method(outputs,_jit_sym_getindex,1); 
 	
 	if (x && depth_matrix && rgb_matrix) {
+		
+		post("isopem=%i",x->is_open);
+		if (x->is_open==1)
+		{
+			systhread_mutex_lock(x->backbuffer_mutex);
+			
+			if (x->got_depth>0) {
+				tmp16 = x->depth_front;
+				x->depth_front = x->depth_mid;
+				x->depth_mid = tmp16;
+				x->got_depth = 0;
+				has_new_frame=1;
+				sync_to_depth=1;
+			}
+			
+			if (x->got_rgb>0) {
+				tmp8 = x->rgb_front;
+				x->rgb_front = x->rgb_mid;
+				x->rgb_mid = tmp8;
+				x->got_rgb = 0;
+				has_new_frame=1;
+			}
+			systhread_mutex_unlock(x->backbuffer_mutex);
+		}
+		else {
+			post("device not open2");
+		}
 		
 		depth_savelock = (long) jit_object_method(depth_matrix,_jit_sym_lock,1);
 		rgb_savelock = (long) jit_object_method(rgb_matrix,_jit_sym_lock,1);
@@ -990,7 +1068,7 @@ t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, vo
 		}
 		 
 		//Grab and copy matrices
-		x->has_frames = 0;  //Assume there are no new frames
+/*		x->has_frames = 0;  //Assume there are no new frames
 		
 		if(x->have_rgb_frames || x->have_depth_frames){
 			x->timestamp = MAX(x->rgb_timestamp,x->depth_timestamp);
@@ -998,6 +1076,7 @@ t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, vo
 			if(x->have_rgb_frames){
 				copy_rgb_data(x->rgb_data, rgb_bp, &rgb_minfo);
 				x->have_rgb_frames = 0;
+				//x->has_frames = 1;
 			}
 			
 			if(x->have_depth_frames){
@@ -1013,8 +1092,23 @@ t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, vo
 			else if((x->clear_depth)&&((x->rgb_timestamp - x->depth_timestamp)>3000000)){
 				jit_object_method(depth_matrix, _jit_sym_clear);
 				x->has_frames = 1;
+				post("Clearing depth...");//TODO:r
 			}
 		}
+*/		
+		
+		if (x->is_open==1)
+		{
+			x->has_frames=sync_to_depth;//has_new_frame;
+			if (sync_to_depth>0) {
+			copy_rgb_data(x->rgb_front, rgb_bp, &rgb_minfo);
+			copy_depth_data(x->depth_front, depth_bp, &depth_minfo, &x->lut);
+			}
+		}
+		else {
+			post("device not open");//TODO:r
+		}
+
 		
 	} else {
 		return JIT_ERR_INVALID_PTR;
@@ -1023,7 +1117,7 @@ t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, vo
 out:
 	jit_object_method(depth_matrix,gensym("lock"),depth_savelock);
 	jit_object_method(rgb_matrix,gensym("lock"),rgb_savelock);
-	systhread_mutex_unlock(x->x_mutex);
+	//systhread_mutex_unlock(x->x_mutex);
 	return err;
 }
 
@@ -1263,19 +1357,31 @@ void rgb_callback(freenect_device *dev, void *pixels, uint32_t timestamp){
 	
 	x = freenect_get_user(dev);
 	
-	if(!x)return;
+	if(!x)	
+	{
+		error("Invalid max object supplied in rgb_callback\n");// TODO:should print only in debug mode
+		return;
+    }
 		
 	
 
-	
-	systhread_mutex_lock(x->x_mutex);
+	//if (x->open)
+	systhread_mutex_lock(x->backbuffer_mutex);
 	//pthread_mutex_lock(&x->cb_mutex);
 	
+	/*
 	x->rgb_data = pixels;
 	x->rgb_timestamp = timestamp;
 	x->have_rgb_frames++;
+	*/
 	
-    systhread_mutex_unlock(x->x_mutex);
+	//assert(x->rgb_back == pixels);
+	x->rgb_back = x->rgb_mid;
+	freenect_set_video_buffer(dev, x->rgb_back);
+	x->rgb_mid = (uint8_t*)pixels;
+	x->got_rgb++;
+	
+    systhread_mutex_unlock(x->backbuffer_mutex);
     //pthread_mutex_unlock(&x->cb_mutex);
 	
 }
@@ -1285,18 +1391,26 @@ void depth_callback(freenect_device *dev, void *pixels, uint32_t timestamp){
 	
 	x = freenect_get_user(dev);
 	
-	if(!x)return;
-    
+	if(!x)	
+	{
+		error("Invalid max object supplied in depth_callback\n");// TODO:should print only in debug mode
+		return;
+    }
 	//post("depth_callback called\n");//TODO:r
-	systhread_mutex_lock(x->x_mutex);
-    
-    //pthread_mutex_lock(&x->cb_mutex);
 	
-	x->depth_data = pixels;
-	x->depth_timestamp = timestamp;
-	x->have_depth_frames++;
+	systhread_mutex_lock(x->backbuffer_mutex);
     
-	systhread_mutex_unlock(x->x_mutex);
+   // pthread_mutex_lock(&x->cb_mutex);
+	
+	//assert(x->depth_back == pixels);
+//	x->depth_back = x->depth_mid;
+
+	x->depth_back = x->depth_mid;
+	freenect_set_depth_buffer(dev, x->depth_back);
+	x->depth_mid = (uint16_t*)pixels;
+	x->got_depth++;
+	
+	systhread_mutex_unlock(x->backbuffer_mutex);
     
     //pthread_mutex_unlock(&x->cb_mutex);
 }
@@ -1310,7 +1424,7 @@ long jit_freenect_restart_thread(t_jit_freenect_grab *x)
 	post("restarting thread.\n");//TODO: remove
 	
 	jit_freenect_thread_stop(x);								// kill thread if, any
-	
+
 	// create new thread + begin execution
 	if (x->x_systhread == NULL) {
 		post("starting a new thread");
@@ -1374,6 +1488,10 @@ void *jit_freenect_capture_threadproc(t_jit_freenect_grab *x)
 	
 	f_ctx = context;
 	
+	struct timeval timeout;
+	timeout.tv_sec = 60;
+	timeout.tv_usec = 0;
+	
 	// loop until told to stop
 	while (1) {
 		
@@ -1385,13 +1503,19 @@ void *jit_freenect_capture_threadproc(t_jit_freenect_grab *x)
 		// no need to lock the mutex
 		//systhread_mutex_lock(x->x_mutex);	
 
-		if(f_ctx->first){
-			if(freenect_process_events(f_ctx) < 0){
+		//if(f_ctx->first){
+			//if(freenect_process_events(f_ctx) < 0){
+		if(freenect_process_events_timeout(f_ctx, &timeout)<0){
 				error("Could not process events.");
-				if (x->x_systhread_cancel) 
+				//if (x->x_systhread_cancel) 
 				break;
 			}
-		}
+
+
+		//}
+		//else {
+		//	post("not first");//TODO:remove
+		//}
 		//x->x_foo++;																// fiddle with shared data
 		
 		
@@ -1399,8 +1523,8 @@ void *jit_freenect_capture_threadproc(t_jit_freenect_grab *x)
 		
 		//qelem_set(x->x_qelem);													// notify main thread using qelem mechanism
 		
-		
-		systhread_sleep(x->x_sleeptime);						// sleep a bit
+		//usleep(2500);
+		//systhread_sleep(x->x_sleeptime);						// sleep a bit
 	}
 
 out:
