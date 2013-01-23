@@ -1365,7 +1365,8 @@ void rgb_callback(freenect_device *dev, void *pixels, uint32_t timestamp){
 		
 	
 
-	//if (x->open)
+	if (x->is_open==1)
+	{
 	systhread_mutex_lock(x->backbuffer_mutex);
 	//pthread_mutex_lock(&x->cb_mutex);
 	
@@ -1382,6 +1383,7 @@ void rgb_callback(freenect_device *dev, void *pixels, uint32_t timestamp){
 	x->got_rgb++;
 	
     systhread_mutex_unlock(x->backbuffer_mutex);
+	}
     //pthread_mutex_unlock(&x->cb_mutex);
 	
 }
@@ -1398,6 +1400,8 @@ void depth_callback(freenect_device *dev, void *pixels, uint32_t timestamp){
     }
 	//post("depth_callback called\n");//TODO:r
 	
+	if (x->is_open==1)
+	{
 	systhread_mutex_lock(x->backbuffer_mutex);
     
    // pthread_mutex_lock(&x->cb_mutex);
@@ -1411,7 +1415,7 @@ void depth_callback(freenect_device *dev, void *pixels, uint32_t timestamp){
 	x->got_depth++;
 	
 	systhread_mutex_unlock(x->backbuffer_mutex);
-    
+    }
     //pthread_mutex_unlock(&x->cb_mutex);
 }
 
