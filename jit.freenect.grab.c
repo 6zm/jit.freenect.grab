@@ -38,6 +38,19 @@
 // TODO: always check log level before release:
 #define JIT_FREENECT_LOG_LEVEL	FREENECT_LOG_DEBUG
 //FREENECT_LOG_FLOOD
+#define NESADEBUG
+
+#ifdef NESADEBUG
+#   define postNesa(fmt, ...) cpost((fmt), ##__VA_ARGS__);
+#else
+#   define postNesa(...)
+#endif
+
+#ifdef NESADEBUGFLOOD
+#   define postNesaFlood(fmt, ...) cpost((fmt), ##__VA_ARGS__);
+#else
+#   define postNesaFlood(...)
+#endif
 
 #define DEBUG_TIMESTAMP __DATE__" "__TIME__"\x0"
 
@@ -108,7 +121,7 @@ typedef struct _jit_freenect_grab
 	uint32_t         depth_timestamp;
 	int got_rgb;
 	int got_depth;
-	char			 is_open;
+	boolean_t			 is_open;
 	char             have_depth_frames;
 	char             have_rgb_frames;
 	char             clear_depth;
@@ -117,26 +130,42 @@ typedef struct _jit_freenect_grab
 	float            *rgb;
 	freenect_raw_tilt_state *state;
 	
-	t_systhread		x_systhread;					// thread reference
+					// thread reference
 	t_systhread_mutex backbuffer_mutex;
-	int				x_systhread_cancel;				// thread cancel flag
+
 	int				x_sleeptime;	
-    
+	int				id;
+
+    //
     //pthread_mutex_t  cb_mutex;
 } t_jit_freenect_grab;
 
-typedef struct _obj_list
+/*typedef struct _obj_list
 {
 	t_jit_freenect_grab **objects;
 	uint32_t count;
 } t_obj_list;
-
+*/
 
 void *_jit_freenect_grab_class;
 
+#pragma mark - Globals 
 t_symbol *s_rgb, *s_RGB;
 t_symbol *s_ir, *s_IR;
 
+//int object_count = 0;
+
+float xlut[640];
+float ylut[480];
+
+
+int global_id;
+
+freenect_context *f_ctx;
+t_systhread		x_systhread;
+boolean_t		x_systhread_cancel;				// thread cancel flag
+boolean_t		freenect_active;
+int open_device_count;
 
 #pragma mark - Forward Defintions
 
@@ -163,21 +192,16 @@ void                    copy_rgb_data(uint8_t *source, char *out_bp, t_jit_matri
 void                    rgb_callback(freenect_device *dev, void *pixels, uint32_t timestamp);
 void                    depth_callback(freenect_device *dev, void *pixels, uint32_t timestamp);
 
-void *jit_freenect_capture_threadproc(t_jit_freenect_grab *x);
+void *jit_freenect_capture_threadproc();//t_jit_freenect_grab *x);
 long jit_freenect_restart_thread(t_jit_freenect_grab *x);
 void jit_freenect_thread_sleeptime(t_jit_freenect_grab *x, long sleeptime);
 void jit_freenect_thread_stop(t_jit_freenect_grab *x);
 void jit_freenect_thread_cancel(t_jit_freenect_grab *x);
 
-pthread_t capture_thread;
-int       terminate_thread;
+//pthread_t capture_thread;
+//int       terminate_thread;
 
-int object_count = 0;
 
-freenect_context *f_ctx = NULL;
-
-float xlut[640];
-float ylut[480];
 
 /*
 
@@ -292,14 +316,14 @@ void calculate_lut(t_lookup *lut, t_symbol *type, int mode){
 				}
 				break;
 			case 3:
-				post("making mode 3 lut\n"); //TODO: remove
+				postNesa("making mode 3 lut\n"); //TODO: remove
 				for(i=0;i<0x7FF;i++){
 					lut->f_ptr[i] =  (float)i*0.01f;//(float)(-10.f / (3.33f + (float)i * -0.00307f));
 				}
 				lut->f_ptr[0x800]=-1.f;
 				break;
 			case 4:
-				post("making mode 4 lut\n"); //TODO: remove
+				postNesa("making mode 4 lut\n"); //TODO: remove
 				for(i=0;i<0x800;i++){
 					lut->f_ptr[i] = 10.f / (3.33f + (float)i * -0.00307f);
 				} 
@@ -397,6 +421,12 @@ t_jit_err jit_freenect_grab_init(void)
 	t_jit_object *mop,*output;
 	t_atom a[4];
 	int i;
+	
+	global_id=0;
+	x_systhread = NULL;
+	x_systhread_cancel=FALSE;
+	freenect_active=FALSE;
+	open_device_count=0;
 	
 	s_rgb = gensym("rgb");
 	s_RGB = gensym("RGB");
@@ -514,7 +544,7 @@ t_jit_err jit_freenect_grab_init(void)
 		ylut[i] = -0.393910475614942f * (((float)i - 239.5f) / 239.5f);
 	}
 	
-	post("new freenect loaded.");//TODO: remove
+	postNesa("new freenect loaded.");//TODO: remove
 	
 	return JIT_ERR_NONE;
 }
@@ -544,7 +574,7 @@ t_jit_freenect_grab *jit_freenect_grab_new(void)
 		x->threshold = 2.f;
 		x->rgb = NULL;
         
-		x->x_systhread = NULL;
+		//x->x_systhread = NULL;
 		x->backbuffer_mutex = NULL;
 		x->x_sleeptime = 10;
 		systhread_mutex_new(&x->backbuffer_mutex, 0);
@@ -565,12 +595,13 @@ t_jit_freenect_grab *jit_freenect_grab_new(void)
 		x->rgb_mid = (uint8_t*)malloc(640*480*3);
 		x->rgb_front = (uint8_t*)malloc(640*480*3);
 		
-		x->is_open=0;
+		x->is_open=FALSE;
+		x->id=++global_id;
 		
 		//jit_fnect_restart_thread(x);
         //pthread_mutex_init(&x->cb_mutex, NULL);
 		jit_atom_setsym(&x->format, s_rgb);
-		post("new instance added, built on %s, sleeptime:%i",DEBUG_TIMESTAMP,x->x_sleeptime);
+		postNesa("new instance added, built on %s, sleeptime:%i",DEBUG_TIMESTAMP,x->x_sleeptime);
 	} else {
 		x = NULL;
 	}	
@@ -579,7 +610,9 @@ t_jit_freenect_grab *jit_freenect_grab_new(void)
 
 void jit_freenect_grab_free(t_jit_freenect_grab *x)
 {
+	postNesa("grab_free called");
 	// this call stops the thread if all devices are closed.
+	postNesa("grab_free:calling grab_close");
 	jit_freenect_grab_close(x, NULL, 0, NULL);
 	
 	jit_freenect_thread_stop(x);
@@ -789,14 +822,17 @@ void jit_freenect_grab_open(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_a
 	int ndevices, devices_left, dev_ndx;
 	t_jit_freenect_grab *y;
 	freenect_device *dev;
-
+	
+	postNesa("opening device...\n");//TODO: remove
+	
 	if(x->device){
 		error("A device is already open.");
 		return;
 	}
-	
+	x->is_open = FALSE;
 	if(!f_ctx){
-		post("!f_ctx");//TODO: remove
+		
+		postNesa("!f_ctx is null, opening a new device\n");//TODO: remove
 		
 		if (jit_freenect_restart_thread(x)!=MAX_ERR_NONE) {
 			
@@ -805,13 +841,14 @@ void jit_freenect_grab_open(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_a
 			return;
 		}
 		int bailout=0;
-		while((!f_ctx)&&(++bailout<100)){
+		while((!f_ctx)&&(++bailout<1000)){
 			//systhread_sleep(1);
 			sleep(0);
 			//post("deadlocking in the sun %i",bailout);//TODO: remove
 		}
 		if (!f_ctx)
 		{
+			// TODO: replace with conditionall
 			error("Failed to init freenect after %i retries.\n",bailout);
 			return;
 		}
@@ -887,7 +924,7 @@ void jit_freenect_grab_open(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_a
 		x->device = NULL;
 	}
 		else {
-			post("device open");//TODO: remove
+			postNesa("device open");//TODO: remove
 		}
 
 	//freenect_set_depth_buffer(x->device, x->depth_back);
@@ -907,7 +944,7 @@ void jit_freenect_grab_open(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_a
 	//FREENECT_DEPTH_11BIT
 	if (x->aligndepth==1)
 	{
-	post("Depth is aligned to color");
+	postNesa("Depth is aligned to color");
 		freenect_set_depth_mode(x->device, freenect_find_depth_mode(FREENECT_RESOLUTION_MEDIUM, FREENECT_DEPTH_REGISTERED));
 	}
 	else 
@@ -926,27 +963,48 @@ void jit_freenect_grab_open(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_a
 	freenect_start_depth(x->device);
 	freenect_start_video(x->device);
 	
-	x->is_open = 1;
+	x->is_open = TRUE;
+	open_device_count++;
 }
 
 void jit_freenect_grab_close(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_atom *argv)
 {
-	x->is_open = 0;
-	post("closing device...");//TODO:r
 	
-	if(!x->device)return;
-	//freenect_stop_depth(x->device);
-	//freenect_stop_video(x->device);
-	freenect_set_led(x->device,LED_BLINK_GREEN);
-	freenect_close_device(x->device);
-	x->device = NULL;
+	postNesa("closing device: start...");//TODO:r
+	
+	if(f_ctx)
+	{
+		postNesa("closing device:f_ctx is valid.");//TODO:r
+		if(!f_ctx->first){
+		//if (x->x_systhread){
+			postNesa("closing device:last device, stopping thread...");
+			jit_freenect_thread_stop(x);
+		}
+		
+		postNesa("closing device freenect side...");//TODO:r
+		if(!x->device) 
+		{
+			postNesa("closing device:device not open");//TODO:r
+			return;
+		}
+		else {
+			//freenect_stop_depth(x->device);
+			//freenect_stop_video(x->device);
+			freenect_set_led(x->device,LED_BLINK_GREEN);
+			freenect_close_device(x->device);
+			x->device = NULL;
+			open_device_count--;
+		}
 
-	if(!f_ctx->first){
-		post("stopping thread...");
-		jit_freenect_thread_stop(x);
+
+	}
+	else {
+		postNesa("closing device:f_ctx is null, nothing to close");//TODO:r
 	}
 
 	
+
+postNesa("closing device:done\n");//TODO:r	
 }
 
 t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, void *outputs)
@@ -971,8 +1029,8 @@ t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, vo
 	
 	if (x && depth_matrix && rgb_matrix) {
 		
-		post("isopem=%i",x->is_open);
-		if (x->is_open==1)
+		postNesaFlood("matrixcalc:isopem=%i",x->is_open);
+		if (x->is_open)
 		{
 			systhread_mutex_lock(x->backbuffer_mutex);
 			
@@ -995,7 +1053,7 @@ t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, vo
 			systhread_mutex_unlock(x->backbuffer_mutex);
 		}
 		else {
-			post("device not open2");
+			postNesaFlood("matrixcalc:device not open");
 		}
 		
 		depth_savelock = (long) jit_object_method(depth_matrix,_jit_sym_lock,1);
@@ -1097,7 +1155,7 @@ t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, vo
 		}
 */		
 		
-		if (x->is_open==1)
+		if (x->is_open)
 		{
 			x->has_frames=sync_to_depth;//has_new_frame;
 			if (sync_to_depth>0) {
@@ -1106,7 +1164,7 @@ t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, vo
 			}
 		}
 		else {
-			post("device not open");//TODO:r
+			postNesa("device not open");//TODO:r
 		}
 
 		
@@ -1365,7 +1423,7 @@ void rgb_callback(freenect_device *dev, void *pixels, uint32_t timestamp){
 		
 	
 
-	if (x->is_open==1)
+	if (x->is_open)
 	{
 	systhread_mutex_lock(x->backbuffer_mutex);
 	//pthread_mutex_lock(&x->cb_mutex);
@@ -1400,7 +1458,7 @@ void depth_callback(freenect_device *dev, void *pixels, uint32_t timestamp){
     }
 	//post("depth_callback called\n");//TODO:r
 	
-	if (x->is_open==1)
+	if (x->is_open)
 	{
 	systhread_mutex_lock(x->backbuffer_mutex);
     
@@ -1425,14 +1483,15 @@ long jit_freenect_restart_thread(t_jit_freenect_grab *x)
 {
 	long rval = MAX_ERR_NONE;
 	
-	post("restarting thread.\n");//TODO: remove
+	postNesa("restarting thread.\n");//TODO: remove
 	
 	jit_freenect_thread_stop(x);								// kill thread if, any
 
 	// create new thread + begin execution
-	if (x->x_systhread == NULL) {
-		post("starting a new thread");
-		rval = systhread_create((method) jit_freenect_capture_threadproc, x, 0, 0, 0, &x->x_systhread);
+	if (x_systhread == NULL) {
+		postNesa("starting a new thread");
+		x_systhread_cancel = FALSE;
+		rval = systhread_create((method) jit_freenect_capture_threadproc, NULL, 0, 0, 0, &x_systhread);
 	}
 	
 	return rval;
@@ -1459,12 +1518,14 @@ void jit_freenect_thread_stop(t_jit_freenect_grab *x)
 {
 	unsigned int ret;
 	
-	if (x->x_systhread) {
-		post("stopping our thread");
-		x->x_systhread_cancel = true;						// tell the thread to stop		
-		systhread_join(x->x_systhread, &ret);					// wait for the thread to stop
-		x->x_systhread = NULL;
+	if (x_systhread) {
+		postNesa("jit_freenect_thread_stop:stopping our thread");
+		x_systhread_cancel = TRUE;						// tell the thread to stop		
+		postNesa("jit_freenect_thread_stop:wait for the thread to stop");
+		systhread_join(x_systhread, &ret);					// wait for the thread to stop
+		x_systhread = NULL;
 	}
+	postNesa("jit_freenect_thread_stop:done");
 }
 
 
@@ -1474,20 +1535,20 @@ void jit_freenect_thread_cancel(t_jit_freenect_grab *x)
 	//outlet_anything(x->x_outlet, gensym("cancelled"), 0, NULL);	
 }
 
-void *jit_freenect_capture_threadproc(t_jit_freenect_grab *x) 
+void *jit_freenect_capture_threadproc()//t_jit_freenect_grab *x) 
 {
 	freenect_context *context;
 	
-	post("Threadproc called\n");//TODO:r
+	postNesa("Threadproc called");//TODO:r
 	
 	if(!f_ctx){
-		
+		postNesa("f_ctx is null, calling init_Freenect");//TODO:r
 		if (freenect_init(&context, NULL) < 0) {
-			error("freenect_init() failed\n");
+			error("freenect_init() failed");
 			goto out;
 		}
 		freenect_set_log_level(context, JIT_FREENECT_LOG_LEVEL);
-		post("freenect_init ok.\n");//TODO: remove
+		postNesa("freenect_init ok,id");//TODO: remove
 	}
 	
 	f_ctx = context;
@@ -1499,21 +1560,32 @@ void *jit_freenect_capture_threadproc(t_jit_freenect_grab *x)
 	// loop until told to stop
 	while (1) {
 		
+		//postNesaFlood("threadid=%i",x->id);
 		// test if we're being asked to die, and if so return before we do the work
-		if (x->x_systhread_cancel) 
+		if (x_systhread_cancel)
+		{
+			postNesa("stopping thread");
 			break;
-		
+		}
 		// this thread is used only to process freenect events
 		// no need to lock the mutex
 		//systhread_mutex_lock(x->x_mutex);	
 
 		//if(f_ctx->first){
 			//if(freenect_process_events(f_ctx) < 0){
-		if(freenect_process_events_timeout(f_ctx, &timeout)<0){
+		
+		if(freenect_active)
+		{
+		if(freenect_process_events_timeout(f_ctx, &timeout)<0)
+			{
 				error("Could not process events.");
 				//if (x->x_systhread_cancel) 
 				break;
 			}
+		}
+		else {
+			postNesa("freenect_active=false\n");
+		}
 
 
 		//}
@@ -1532,17 +1604,18 @@ void *jit_freenect_capture_threadproc(t_jit_freenect_grab *x)
 	}
 
 out:
-	post("Threadproc exits.\n");//TODO:r
+	postNesa("Threadproc exits");//TODO:r
 	
 	
+	//postNesa("Threadproc calls grab_close ,id=%i\n",x->id);//TODO:r
 	// TODO: add notification through dupmoutlet
-	jit_freenect_grab_close(x, NULL, 0, NULL);
+	//jit_freenect_grab_close(x, NULL, 0, NULL);
 	
 	freenect_shutdown(f_ctx);
 	f_ctx = NULL;
 	
 	
-	x->x_systhread_cancel = false;							// reset cancel flag for next time, in case
+	//x->x_systhread_cancel = false;							// reset cancel flag for next time, in case
 	// the thread is created again
 	
 	systhread_exit(0);															// this can return a value to systhread_join();
