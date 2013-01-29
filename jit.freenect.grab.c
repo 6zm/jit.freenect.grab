@@ -42,12 +42,14 @@
 
 #ifdef NESADEBUG
 #   define postNesa(fmt, ...) cpost((fmt), ##__VA_ARGS__);
+#warning Nesa's debug log enabled
 #else
 #   define postNesa(...)
 #endif
 
 #ifdef NESADEBUGFLOOD
 #   define postNesaFlood(fmt, ...) cpost((fmt), ##__VA_ARGS__);
+#warning Nesa's debug flood log enabled
 #else
 #   define postNesaFlood(...)
 #endif
