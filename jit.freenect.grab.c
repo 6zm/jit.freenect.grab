@@ -965,6 +965,7 @@ void jit_freenect_grab_open(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_a
 	
 	x->is_open = TRUE;
 	open_device_count++;
+	freenect_active=TRUE;
 }
 
 void jit_freenect_grab_close(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_atom *argv)
@@ -1574,18 +1575,19 @@ void *jit_freenect_capture_threadproc()//t_jit_freenect_grab *x)
 		//if(f_ctx->first){
 			//if(freenect_process_events(f_ctx) < 0){
 		
-		if(freenect_active)
-		{
+		//if(freenect_active)
+		//{
+		if(f_ctx->first)
 		if(freenect_process_events_timeout(f_ctx, &timeout)<0)
 			{
 				error("Could not process events.");
 				//if (x->x_systhread_cancel) 
 				break;
 			}
-		}
-		else {
-			postNesa("freenect_active=false\n");
-		}
+		//}
+		//else {
+		//	postNesa("freenect_active=false\n");
+		//}
 
 
 		//}
