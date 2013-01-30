@@ -603,7 +603,7 @@ t_jit_freenect_grab *jit_freenect_grab_new(void)
 		//jit_fnect_restart_thread(x);
         //pthread_mutex_init(&x->cb_mutex, NULL);
 		jit_atom_setsym(&x->format, s_rgb);
-		postNesa("new instance added, built on %s, sleeptime:%i",DEBUG_TIMESTAMP,x->x_sleeptime);
+		post("jit.freenect.grab: Copyright 2010, Jean-Marc Pelletier, Nenad Popov and Andrew Roth. Built on %s",DEBUG_TIMESTAMP);
 	} else {
 		x = NULL;
 	}	
