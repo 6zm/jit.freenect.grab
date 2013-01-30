@@ -546,8 +546,8 @@ t_jit_err jit_freenect_grab_init(void)
 		ylut[i] = -0.393910475614942f * (((float)i - 239.5f) / 239.5f);
 	}
 	
-	postNesa("new freenect loaded.");//TODO: remove
-	
+
+	post("jit.freenect.grab: Copyright 2010, Jean-Marc Pelletier, Nenad Popov and Andrew Roth. Built on %s",DEBUG_TIMESTAMP);
 	return JIT_ERR_NONE;
 }
 
@@ -603,10 +603,10 @@ t_jit_freenect_grab *jit_freenect_grab_new(void)
 		//jit_fnect_restart_thread(x);
         //pthread_mutex_init(&x->cb_mutex, NULL);
 		jit_atom_setsym(&x->format, s_rgb);
-		post("jit.freenect.grab: Copyright 2010, Jean-Marc Pelletier, Nenad Popov and Andrew Roth. Built on %s",DEBUG_TIMESTAMP);
+		postNesa("new freenect instance added.");//TODO: remove	
 	} else {
 		x = NULL;
-	}	
+	}
 	return x;
 }
 
