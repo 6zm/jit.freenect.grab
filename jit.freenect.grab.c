@@ -28,8 +28,8 @@
 
 #define DEPTH_WIDTH 640
 #define DEPTH_HEIGHT 480
-#define RGB_WIDTH 640
-#define RGB_HEIGHT 480
+#define RGB_WIDTH 1280
+#define RGB_HEIGHT 1024
 #define MAX_DEVICES 8
 #define CLOUD_SIZE (DEPTH_WIDTH+2)*DEPTH_HEIGHT*2
 #define CLOUD_BLOCK 640
@@ -935,10 +935,10 @@ void jit_freenect_grab_open(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_a
 	freenect_set_depth_callback(x->device, depth_callback);
 	freenect_set_video_callback(x->device, rgb_callback);
 	if(x->format.a_w.w_sym == s_ir){
-		freenect_set_video_mode(x->device, freenect_find_video_mode(FREENECT_RESOLUTION_MEDIUM, FREENECT_VIDEO_IR_8BIT));
+		freenect_set_video_mode(x->device, freenect_find_video_mode(FREENECT_RESOLUTION_HIGH, FREENECT_VIDEO_IR_8BIT));
 	}
 	else{
-		freenect_set_video_mode(x->device, freenect_find_video_mode(FREENECT_RESOLUTION_MEDIUM, FREENECT_VIDEO_RGB));
+		freenect_set_video_mode(x->device, freenect_find_video_mode(FREENECT_RESOLUTION_HIGH, FREENECT_VIDEO_RGB));
 	}
 	
 	//TODO: add FREENECT_DEPTH_REGISTERED mode
@@ -962,7 +962,8 @@ void jit_freenect_grab_open(t_jit_freenect_grab *x,  t_symbol *s, long argc, t_a
 	
 	//freenect_set_tilt_degs(x->device,x->tilt);
 	
-	freenect_start_depth(x->device);
+	//freenect_start_depth(x->device);
+	//freenect_stop_depth(x->device);
 	freenect_start_video(x->device);
 	
 	x->is_open = TRUE;
@@ -1162,9 +1163,15 @@ t_jit_err jit_freenect_grab_matrix_calc(t_jit_freenect_grab *x, void *inputs, vo
 		{
 			x->has_frames=sync_to_depth;//has_new_frame;
 			if (sync_to_depth>0) {
-			copy_rgb_data(x->rgb_front, rgb_bp, &rgb_minfo);
-			copy_depth_data(x->depth_front, depth_bp, &depth_minfo, &x->lut);
+			//copy_rgb_data(x->rgb_front, rgb_bp, &rgb_minfo);
+			//copy_depth_data(x->depth_front, depth_bp, &depth_minfo, &x->lut);
 			}
+			
+			if(has_new_frame>0)
+			{
+				copy_rgb_data(x->rgb_front, rgb_bp, &rgb_minfo);
+			}
+			
 		}
 		else {
 			postNesa("device not open");//TODO:r
