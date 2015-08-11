@@ -11,4 +11,6 @@ jit.freenect.grab.xcodeproj/project.xcworkspace/xcuserdata
 *.pbxuser
 *.perspectivev3
 xcuserdata
-InteractiveTracks.xccheckout
+*.xccheckout
+jit.freenect.grab.xccheckout
+max.jit.freenect.grabb.xccheckout
