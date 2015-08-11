@@ -41,7 +41,7 @@ void *max_jit_freenect_grab_class;
 t_symbol *ps_gethas_frames, *ps_getunique;
 
 void ext_main(void *r)
-{	
+{
 	void *p,*q;
 	
 	union { void **v_ptr; t_messlist **m_ptr; } alias_ptr; //this is to avoid warnings when compiling as C++
