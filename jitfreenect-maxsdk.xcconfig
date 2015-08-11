@@ -18,7 +18,7 @@ ARCHS = i386 x86_64
 // Paths
 LIBUSBPATH = $(SRCROOT)/../freenectUpdate/libusb/libusb
 LIBFREENECTPATH = $(SRCROOT)/../freenectUpdate/libfreenect
-JITFREENECT_LINKER_FLAGS = "$(LIBFREENECTPATH)/build/lib/libfreenect.a" "$(LIBUSBPATH)/.libs/libusb-1.0.a"
+JITFREENECT_LINKER_FLAGS = "$(LIBFREENECTPATH)/build/lib/libfreenect.a" "$(LIBUSBPATH)/.libs/libusb-1.0.a" "-Wl,-framework,IOKit" "-Wl,-framework,Foundation" "-Wl,-framework,JitterAPI"
 //"-framework IOKit"
 C74SUPPORT = $(SRCROOT)/../max-sdk-7.0.3/source/c74support
 HEADER_SEARCH_PATHS = "$(C74SUPPORT)/max-includes" "$(C74SUPPORT)/msp-includes" "$(C74SUPPORT)/jit-includes" "$(LIBUSBPATH)" "$(LIBFREENECTPATH)/include" "$(LIBFREENECTPATH)/src"
