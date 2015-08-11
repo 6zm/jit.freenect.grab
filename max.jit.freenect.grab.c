@@ -40,7 +40,7 @@ void *max_jit_freenect_grab_class;
 
 t_symbol *ps_gethas_frames, *ps_getunique;
 
-int main(void)
+void ext_main(void *r)
 {	
 	void *p,*q;
 	
