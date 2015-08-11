@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4875860B-F4A2-409E-BF03-03DF7E65BC38</string>
+	<key>IDESourceControlProjectName</key>
+	<string>max.jit.freenect.grab</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>720D2D8B-4CEF-40C6-9699-52094897281F</key>
+		<string>https://github.com/npnp/jit.freenect.grab.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>max.jit.freenect.grab.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>720D2D8B-4CEF-40C6-9699-52094897281F</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/npnp/jit.freenect.grab.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>720D2D8B-4CEF-40C6-9699-52094897281F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>720D2D8B-4CEF-40C6-9699-52094897281F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>jit.freenect.grab</string>
+		</dict>
+	</array>
+</dict>
+</plist>

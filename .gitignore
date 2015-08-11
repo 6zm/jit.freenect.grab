@@ -1,0 +1,14 @@
+build
+jit.freenect.grab.xcodeproj/project.xcworkspace/xcuserdata
+
+# temp nibs and swap files
+*~.nib
+*.swp
+
+# Xcode's user settings
+*.mode1v3
+*.mode2v3
+*.pbxuser
+*.perspectivev3
+xcuserdata
+InteractiveTracks.xccheckout
