@@ -1,3 +1,9 @@
+// Xcode configuration settings for jit.freenect.grab
+// It's based on max7sdk xcconfig with the following changes:
+// additional search paths for libfreenect and libusb
+// additional linker flags for linking of libfreenect&libusb
+// dstroot is changed to $(SRCROOT)/build
+
 // Xcode target configuration settings for the Max 6 SDK
 // Used as the basis for Xcode projects to build Max externals.
 //
@@ -16,10 +22,11 @@ ARCHS = i386 x86_64
 
 
 // Paths
+// jit.freenect.grab specific
 LIBUSBPATH = $(SRCROOT)/../freenectUpdate/libusb/libusb
 LIBFREENECTPATH = $(SRCROOT)/../freenectUpdate/libfreenect
 JITFREENECT_LINKER_FLAGS = "$(LIBFREENECTPATH)/build/lib/libfreenect.a" "$(LIBUSBPATH)/.libs/libusb-1.0.a" "-Wl,-framework,IOKit" "-Wl,-framework,Foundation" "-Wl,-framework,JitterAPI"
-//"-framework IOKit"
+// modified c74 settings:
 C74SUPPORT = $(SRCROOT)/../max-sdk-7.0.3/source/c74support
 HEADER_SEARCH_PATHS = "$(C74SUPPORT)/max-includes" "$(C74SUPPORT)/msp-includes" "$(C74SUPPORT)/jit-includes" "$(LIBUSBPATH)" "$(LIBFREENECTPATH)/include" "$(LIBFREENECTPATH)/src"
 FRAMEWORK_SEARCH_PATHS = "$(C74SUPPORT)/max-includes" "$(C74SUPPORT)/msp-includes" "$(C74SUPPORT)/jit-includes" "/System/Library/Frameworks"

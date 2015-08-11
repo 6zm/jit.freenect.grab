@@ -1540,7 +1540,11 @@ void jit_freenect_thread_cancel(t_jit_freenect_grab *x)
 
 void *jit_freenect_capture_threadproc()//t_jit_freenect_grab *x) 
 {
-	freenect_context *context;
+ 
+#ifdef NESADEBUG
+#warning if crash remove=NULL
+#endif
+	freenect_context *context = NULL;
 	
 	postNesa("Threadproc called");//TODO:r
 	
