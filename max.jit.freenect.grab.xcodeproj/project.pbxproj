@@ -11,6 +11,8 @@
 		22301F4410D7BC4000C1989F /* max.jit.freenect.grab.c in Sources */ = {isa = PBXBuildFile; fileRef = 22301F4210D7BC4000C1989F /* max.jit.freenect.grab.c */; };
 		22301F4A10D7BC6C00C1989F /* JitterAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22301F4910D7BC6C00C1989F /* JitterAPI.framework */; };
 		C5E01D801B792705006AB23F /* maxmspsdk.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C5E01D7F1B792705006AB23F /* maxmspsdk.xcconfig */; };
+		C5ED37381B7A58C5004D2E9B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5ED37371B7A58C5004D2E9B /* IOKit.framework */; };
+		C5ED373A1B7A58E1004D2E9B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5ED37391B7A58E1004D2E9B /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		22301F4910D7BC6C00C1989F /* JitterAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JitterAPI.framework; path = "../../../c74support/jit-includes/JitterAPI.framework"; sourceTree = SOURCE_ROOT; };
 		2FBBEAE508F335360078DB84 /* max.jit.freenect.grab.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = max.jit.freenect.grab.mxo; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5E01D7F1B792705006AB23F /* maxmspsdk.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = maxmspsdk.xcconfig; sourceTree = "<group>"; };
+		C5ED37371B7A58C5004D2E9B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		C5ED37391B7A58E1004D2E9B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +30,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5ED373A1B7A58E1004D2E9B /* Foundation.framework in Frameworks */,
+				C5ED37381B7A58C5004D2E9B /* IOKit.framework in Frameworks */,
 				22301F4A10D7BC6C00C1989F /* JitterAPI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -36,6 +42,8 @@
 		089C166AFE841209C02AAC07 /* iterator */ = {
 			isa = PBXGroup;
 			children = (
+				C5ED37391B7A58E1004D2E9B /* Foundation.framework */,
+				C5ED37371B7A58C5004D2E9B /* IOKit.framework */,
 				C5E01D7F1B792705006AB23F /* maxmspsdk.xcconfig */,
 				08FB77ADFE841716C02AAC07 /* Source */,
 				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
@@ -180,12 +188,12 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../c74support/jit-includes\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_OPTIMIZATION_LEVEL = 0;
-				OTHER_LDFLAGS = "$(C74_SYM_LINKER_FLAGS)";
+				OTHER_LDFLAGS = (
+					"$(JITFREENECT_LINKER_FLAGS)",
+					"$(C74_SYM_LINKER_FLAGS)",
+				);
 			};
 			name = Development;
 		};
@@ -195,11 +203,11 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../c74support/jit-includes\"",
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(JITFREENECT_LINKER_FLAGS)",
+					"$(C74_SYM_LINKER_FLAGS)",
 				);
-				OTHER_LDFLAGS = "$(C74_SYM_LINKER_FLAGS)";
 			};
 			name = Deployment;
 		};
