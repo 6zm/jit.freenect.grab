@@ -776,7 +776,7 @@ t_jit_err jit_freenect_grab_set_mode(t_jit_freenect_grab *x, void *attr, long ac
 		long mode = jit_atom_getlong(av);
 		
 		// TODO: add FREENECT_DEPTH_REGISTERED
-		CLIP(mode, 0, 3);  // <-- See explanation in build_geometry implementation as to why I'm blocking point cloud output for now - jmp 2011-01-11
+		CLIP_ASSIGN(mode, 0, 3);  // <-- See explanation in build_geometry implementation as to why I'm blocking point cloud output for now - jmp 2011-01-11
 		/*
 		if(mode == 4){
 			if(!x->cloud.points){
@@ -811,7 +811,7 @@ void jit_freenect_grab_set_tilt(t_jit_freenect_grab *x,  void *attr, long argc, 
 	if(argv){
 		x->tilt = jit_atom_getlong(argv);
 		
-		CLIP(x->tilt, -30, 30);
+		CLIP_ASSIGN(x->tilt, -30, 30);
 		
 		if(x->device){
 			freenect_set_tilt_degs(x->device,x->tilt);

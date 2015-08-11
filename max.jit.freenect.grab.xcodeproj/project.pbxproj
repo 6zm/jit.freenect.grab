@@ -3,107 +3,60 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8D01CCCE0486CAD60068D4B7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */; };
-		B43600621293FD7500228EA0 /* JitterAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B43600611293FD7500228EA0 /* JitterAPI.framework */; };
-		B4578CBC129CAF17004A0DF2 /* cameras.c in Sources */ = {isa = PBXBuildFile; fileRef = B4578CB6129CAF17004A0DF2 /* cameras.c */; };
-		B4578CBD129CAF17004A0DF2 /* core.c in Sources */ = {isa = PBXBuildFile; fileRef = B4578CB7129CAF17004A0DF2 /* core.c */; };
-		B4578CBE129CAF17004A0DF2 /* freenect_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = B4578CB8129CAF17004A0DF2 /* freenect_internal.h */; };
-		B4578CBF129CAF17004A0DF2 /* tilt.c in Sources */ = {isa = PBXBuildFile; fileRef = B4578CB9129CAF17004A0DF2 /* tilt.c */; };
-		B4578CC0129CAF17004A0DF2 /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = B4578CBA129CAF17004A0DF2 /* usb_libusb10.c */; };
-		B4578CC1129CAF17004A0DF2 /* usb_libusb10.h in Headers */ = {isa = PBXBuildFile; fileRef = B4578CBB129CAF17004A0DF2 /* usb_libusb10.h */; };
-		B4793DA51299030800A44AF1 /* core.c in Sources */ = {isa = PBXBuildFile; fileRef = B4793DA11299030800A44AF1 /* core.c */; };
-		B4793DA61299030800A44AF1 /* descriptor.c in Sources */ = {isa = PBXBuildFile; fileRef = B4793DA21299030800A44AF1 /* descriptor.c */; };
-		B4793DA71299030800A44AF1 /* io.c in Sources */ = {isa = PBXBuildFile; fileRef = B4793DA31299030800A44AF1 /* io.c */; };
-		B4793DA81299030800A44AF1 /* sync.c in Sources */ = {isa = PBXBuildFile; fileRef = B4793DA41299030800A44AF1 /* sync.c */; };
-		B4793DB31299035F00A44AF1 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = B4793DB21299035F00A44AF1 /* config.h */; };
-		B4793DDA129904AC00A44AF1 /* darwin_usb.c in Sources */ = {isa = PBXBuildFile; fileRef = B4793DD9129904AC00A44AF1 /* darwin_usb.c */; };
-		B4B4AEF61293DBE600B34CB3 /* jit.freenect.grab.c in Sources */ = {isa = PBXBuildFile; fileRef = B4B4AEF41293DBE600B34CB3 /* jit.freenect.grab.c */; };
-		B4B4AEF71293DBE600B34CB3 /* max.jit.freenect.grab.c in Sources */ = {isa = PBXBuildFile; fileRef = B4B4AEF51293DBE600B34CB3 /* max.jit.freenect.grab.c */; };
-		B4BFD6B51294CE0400BACB4B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4BFD6B41294CE0400BACB4B /* IOKit.framework */; };
-		C5040F8516ADD7BB001DC934 /* MaxAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B436001B1293FD6B00228EA0 /* MaxAPI.framework */; };
-		C5CDD4CB16AEEA18001FF6A3 /* libfreenect.a - release in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CDD4CA16AEEA18001FF6A3 /* libfreenect.a - release */; };
+		22301F4310D7BC4000C1989F /* jit.freenect.grab.c in Sources */ = {isa = PBXBuildFile; fileRef = 22301F4110D7BC4000C1989F /* jit.freenect.grab.c */; };
+		22301F4410D7BC4000C1989F /* max.jit.freenect.grab.c in Sources */ = {isa = PBXBuildFile; fileRef = 22301F4210D7BC4000C1989F /* max.jit.freenect.grab.c */; };
+		22301F4A10D7BC6C00C1989F /* JitterAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22301F4910D7BC6C00C1989F /* JitterAPI.framework */; };
+		C5E01D801B792705006AB23F /* maxmspsdk.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C5E01D7F1B792705006AB23F /* maxmspsdk.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		B436001B1293FD6B00228EA0 /* MaxAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MaxAPI.framework; path = /Applications/Max5/MaxMSP.app/Contents/Frameworks/MaxAPI.framework; sourceTree = "<absolute>"; };
-		B43600611293FD7500228EA0 /* JitterAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JitterAPI.framework; path = "../c74support/jit-includes/JitterAPI.framework"; sourceTree = SOURCE_ROOT; };
-		B4578CB6129CAF17004A0DF2 /* cameras.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cameras.c; path = ../libfreenect/src/cameras.c; sourceTree = SOURCE_ROOT; };
-		B4578CB7129CAF17004A0DF2 /* core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = core.c; path = ../libfreenect/src/core.c; sourceTree = SOURCE_ROOT; };
-		B4578CB8129CAF17004A0DF2 /* freenect_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = freenect_internal.h; path = ../libfreenect/src/freenect_internal.h; sourceTree = SOURCE_ROOT; };
-		B4578CB9129CAF17004A0DF2 /* tilt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tilt.c; path = ../libfreenect/src/tilt.c; sourceTree = SOURCE_ROOT; };
-		B4578CBA129CAF17004A0DF2 /* usb_libusb10.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = usb_libusb10.c; path = ../libfreenect/src/usb_libusb10.c; sourceTree = SOURCE_ROOT; };
-		B4578CBB129CAF17004A0DF2 /* usb_libusb10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = usb_libusb10.h; path = ../libfreenect/src/usb_libusb10.h; sourceTree = SOURCE_ROOT; };
-		B4793DA11299030800A44AF1 /* core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = core.c; path = ../libusb/libusb/core.c; sourceTree = SOURCE_ROOT; };
-		B4793DA21299030800A44AF1 /* descriptor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = descriptor.c; path = ../libusb/libusb/descriptor.c; sourceTree = SOURCE_ROOT; };
-		B4793DA31299030800A44AF1 /* io.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = io.c; path = ../libusb/libusb/io.c; sourceTree = SOURCE_ROOT; };
-		B4793DA41299030800A44AF1 /* sync.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sync.c; path = ../libusb/libusb/sync.c; sourceTree = SOURCE_ROOT; };
-		B4793DB21299035F00A44AF1 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = ../libusb/config.h; sourceTree = SOURCE_ROOT; };
-		B4793DD9129904AC00A44AF1 /* darwin_usb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = darwin_usb.c; path = ../libusb/libusb/os/darwin_usb.c; sourceTree = SOURCE_ROOT; };
-		B4B4AEF41293DBE600B34CB3 /* jit.freenect.grab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jit.freenect.grab.c; sourceTree = "<group>"; };
-		B4B4AEF51293DBE600B34CB3 /* max.jit.freenect.grab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = max.jit.freenect.grab.c; sourceTree = "<group>"; };
-		B4B4AEF81293DBE600B34CB3 /* jit.freenect.grab.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jit.freenect.grab.mxo; sourceTree = BUILT_PRODUCTS_DIR; };
-		B4BFD6B41294CE0400BACB4B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
-		C5CDD4CA16AEEA18001FF6A3 /* libfreenect.a - release */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libfreenect.a - release"; path = ../libfreenect/xcode/lib/Release/libfreenect.a; sourceTree = SOURCE_ROOT; };
+		22301F4110D7BC4000C1989F /* jit.freenect.grab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jit.freenect.grab.c; sourceTree = "<group>"; };
+		22301F4210D7BC4000C1989F /* max.jit.freenect.grab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = max.jit.freenect.grab.c; sourceTree = "<group>"; };
+		22301F4910D7BC6C00C1989F /* JitterAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JitterAPI.framework; path = "../../../c74support/jit-includes/JitterAPI.framework"; sourceTree = SOURCE_ROOT; };
+		2FBBEAE508F335360078DB84 /* max.jit.freenect.grab.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = max.jit.freenect.grab.mxo; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5E01D7F1B792705006AB23F /* maxmspsdk.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = maxmspsdk.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8D01CCCD0486CAD60068D4B7 /* Frameworks */ = {
+		2FBBEADC08F335360078DB84 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D01CCCE0486CAD60068D4B7 /* Carbon.framework in Frameworks */,
-				B43600621293FD7500228EA0 /* JitterAPI.framework in Frameworks */,
-				B4BFD6B51294CE0400BACB4B /* IOKit.framework in Frameworks */,
-				C5040F8516ADD7BB001DC934 /* MaxAPI.framework in Frameworks */,
-				C5CDD4CB16AEEA18001FF6A3 /* libfreenect.a - release in Frameworks */,
+				22301F4A10D7BC6C00C1989F /* JitterAPI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		089C166AFE841209C02AAC07 /* atanh */ = {
+		089C166AFE841209C02AAC07 /* iterator */ = {
 			isa = PBXGroup;
 			children = (
-				B4793D9B129902F000A44AF1 /* libusb source */,
-				B4B4AF031293DC7C00B34CB3 /* freenect source */,
+				C5E01D7F1B792705006AB23F /* maxmspsdk.xcconfig */,
 				08FB77ADFE841716C02AAC07 /* Source */,
-				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
 				19C28FB4FE9D528D11CA2CBB /* Products */,
-				C5CDD4CA16AEEA18001FF6A3 /* libfreenect.a - release */,
 			);
-			name = atanh;
+			name = iterator;
 			sourceTree = "<group>";
 		};
 		089C1671FE841209C02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				B43600611293FD7500228EA0 /* JitterAPI.framework */,
-				B436001B1293FD6B00228EA0 /* MaxAPI.framework */,
-				08EA7FFBFE8413EDC02AAC07 /* Carbon.framework */,
-				B4BFD6B41294CE0400BACB4B /* IOKit.framework */,
+				22301F4910D7BC6C00C1989F /* JitterAPI.framework */,
 			);
 			name = "External Frameworks and Libraries";
-			sourceTree = "<group>";
-		};
-		089C167CFE841241C02AAC07 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		08FB77ADFE841716C02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				B4B4AEF41293DBE600B34CB3 /* jit.freenect.grab.c */,
-				B4B4AEF51293DBE600B34CB3 /* max.jit.freenect.grab.c */,
+				22301F4210D7BC4000C1989F /* max.jit.freenect.grab.c */,
+				22301F4110D7BC4000C1989F /* jit.freenect.grab.c */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -111,71 +64,41 @@
 		19C28FB4FE9D528D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B4B4AEF81293DBE600B34CB3 /* jit.freenect.grab.mxo */,
+				2FBBEAE508F335360078DB84 /* max.jit.freenect.grab.mxo */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		B4793D9B129902F000A44AF1 /* libusb source */ = {
-			isa = PBXGroup;
-			children = (
-				B4793DD9129904AC00A44AF1 /* darwin_usb.c */,
-				B4793DB21299035F00A44AF1 /* config.h */,
-				B4793DA11299030800A44AF1 /* core.c */,
-				B4793DA21299030800A44AF1 /* descriptor.c */,
-				B4793DA31299030800A44AF1 /* io.c */,
-				B4793DA41299030800A44AF1 /* sync.c */,
-			);
-			name = "libusb source";
-			sourceTree = "<group>";
-		};
-		B4B4AF031293DC7C00B34CB3 /* freenect source */ = {
-			isa = PBXGroup;
-			children = (
-				B4578CB6129CAF17004A0DF2 /* cameras.c */,
-				B4578CB7129CAF17004A0DF2 /* core.c */,
-				B4578CB8129CAF17004A0DF2 /* freenect_internal.h */,
-				B4578CB9129CAF17004A0DF2 /* tilt.c */,
-				B4578CBA129CAF17004A0DF2 /* usb_libusb10.c */,
-				B4578CBB129CAF17004A0DF2 /* usb_libusb10.h */,
-			);
-			name = "freenect source";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		8D01CCC70486CAD60068D4B7 /* Headers */ = {
+		2FBBEAD708F335360078DB84 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4793DB31299035F00A44AF1 /* config.h in Headers */,
-				B4578CBE129CAF17004A0DF2 /* freenect_internal.h in Headers */,
-				B4578CC1129CAF17004A0DF2 /* usb_libusb10.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		8D01CCC60486CAD60068D4B7 /* jit.freenect.grab */ = {
+		2FBBEAD608F335360078DB84 /* max-external */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0FF65FF0096B38E400E9E0B4 /* Build configuration list for PBXNativeTarget "jit.freenect.grab" */;
+			buildConfigurationList = 2FBBEAE008F335360078DB84 /* Build configuration list for PBXNativeTarget "max-external" */;
 			buildPhases = (
-				8D01CCC70486CAD60068D4B7 /* Headers */,
-				8D01CCC90486CAD60068D4B7 /* Resources */,
-				8D01CCCB0486CAD60068D4B7 /* Sources */,
-				8D01CCCD0486CAD60068D4B7 /* Frameworks */,
-				8D01CCCF0486CAD60068D4B7 /* Rez */,
+				2FBBEAD708F335360078DB84 /* Headers */,
+				2FBBEAD808F335360078DB84 /* Resources */,
+				2FBBEADA08F335360078DB84 /* Sources */,
+				2FBBEADC08F335360078DB84 /* Frameworks */,
+				2FBBEADF08F335360078DB84 /* Rez */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = jit.freenect.grab;
-			productInstallPath = "$(HOME)/Library/Bundles";
-			productName = MaxExternal;
-			productReference = B4B4AEF81293DBE600B34CB3 /* jit.freenect.grab.mxo */;
+			name = "max-external";
+			productName = iterator;
+			productReference = 2FBBEAE508F335360078DB84 /* max.jit.freenect.grab.mxo */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -183,8 +106,11 @@
 /* Begin PBXProject section */
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 0FF65FF4096B38E400E9E0B4 /* Build configuration list for PBXProject "max.jit.freenect.grab" */;
-			compatibilityVersion = "Xcode 2.4";
+			attributes = {
+				LastUpgradeCheck = 0610;
+			};
+			buildConfigurationList = 2FBBEACF08F335010078DB84 /* Build configuration list for PBXProject "max.jit.freenect.grab" */;
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -193,27 +119,28 @@
 				French,
 				German,
 			);
-			mainGroup = 089C166AFE841209C02AAC07 /* atanh */;
+			mainGroup = 089C166AFE841209C02AAC07 /* iterator */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D01CCC60486CAD60068D4B7 /* jit.freenect.grab */,
+				2FBBEAD608F335360078DB84 /* max-external */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8D01CCC90486CAD60068D4B7 /* Resources */ = {
+		2FBBEAD808F335360078DB84 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5E01D801B792705006AB23F /* maxmspsdk.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXRezBuildPhase section */
-		8D01CCCF0486CAD60068D4B7 /* Rez */ = {
+		2FBBEADF08F335360078DB84 /* Rez */ = {
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -223,234 +150,76 @@
 /* End PBXRezBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		8D01CCCB0486CAD60068D4B7 /* Sources */ = {
+		2FBBEADA08F335360078DB84 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4B4AEF61293DBE600B34CB3 /* jit.freenect.grab.c in Sources */,
-				B4B4AEF71293DBE600B34CB3 /* max.jit.freenect.grab.c in Sources */,
-				B4793DA51299030800A44AF1 /* core.c in Sources */,
-				B4793DA61299030800A44AF1 /* descriptor.c in Sources */,
-				B4793DA71299030800A44AF1 /* io.c in Sources */,
-				B4793DA81299030800A44AF1 /* sync.c in Sources */,
-				B4793DDA129904AC00A44AF1 /* darwin_usb.c in Sources */,
-				B4578CBC129CAF17004A0DF2 /* cameras.c in Sources */,
-				B4578CBD129CAF17004A0DF2 /* core.c in Sources */,
-				B4578CBF129CAF17004A0DF2 /* tilt.c in Sources */,
-				B4578CC0129CAF17004A0DF2 /* usb_libusb10.c in Sources */,
+				22301F4310D7BC4000C1989F /* jit.freenect.grab.c in Sources */,
+				22301F4410D7BC4000C1989F /* max.jit.freenect.grab.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		0FF65FF1096B38E400E9E0B4 /* Development */ = {
+		2FBBEAD008F335010078DB84 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
-				COPY_PHASE_STRIP = NO;
-				DEBUGGING_SYMBOLS = YES;
-				DEPLOYMENT_LOCATION = YES;
-				DSTROOT = "$(PROJECT_DIR)";
-				FRAMEWORK_SEARCH_PATHS = (
-					/Library/Frameworks,
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
-				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../c74support/jit-includes\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SYSTEM_APPS_DIR)/Max5/MaxMSP.app/Contents/Frameworks\"";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_ENABLE_SSE41_EXTENSIONS = YES;
-				GCC_ENABLE_SSE42_EXTENSIONS = YES;
-				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
-				GCC_ENABLE_TRIGRAPHS = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_UNROLL_LOOPS = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GENERATE_PKGINFO_FILE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../libfreenect/include",
-					/usr/local/include/,
-					"/usr/local/include/libusb-1.0/",
-					"$(HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
-				);
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../c74support/jit-includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../c74support/jit-includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../c74support/max-includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../c74support/max-includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../libusb/libusb\"";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = /build/development/;
-				LIBRARY_SEARCH_PATHS = (
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_7)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9)",
-				);
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/lib\"";
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(DEVELOPER_DIR)/freenectUpdate/jit.freenect.grab\"";
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_8 = "\"$(DEVELOPER_DIR)/freenectUpdate/libfreenect/xcode/lib/Debug\"";
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_9 = "\"$(DEVELOPER_DIR)/freenectUpdate/libfreenect/xcode/lib/Release\"";
-				LIBRARY_STYLE = Bundle;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-Wl",
-					"-search_paths_first",
-					"-lmx",
-				);
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = jit.freenect.grab;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
-				SECTORDER_FLAGS = "";
-				USER_HEADER_SEARCH_PATHS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = mxo;
-				ZERO_LINK = YES;
 			};
 			name = Development;
 		};
-		0FF65FF2096B38E400E9E0B4 /* Deployment */ = {
+		2FBBEAD108F335010078DB84 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
-				COPY_PHASE_STRIP = YES;
-				DEPLOYMENT_LOCATION = YES;
-				DSTROOT = "$(PROJECT_DIR)";
-				FRAMEWORK_SEARCH_PATHS = (
-					/Library/Frameworks,
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
-				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../c74support/jit-includes\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SYSTEM_APPS_DIR)/Max5/MaxMSP.app/Contents/Frameworks\"";
-				GCC_AUTO_VECTORIZATION = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_ENABLE_SSE41_EXTENSIONS = YES;
-				GCC_ENABLE_SSE42_EXTENSIONS = YES;
-				GCC_ENABLE_TRIGRAPHS = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_UNROLL_LOOPS = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GENERATE_PKGINFO_FILE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../libfreenect/include",
-					/usr/local/include/,
-					"/usr/local/include/libusb-1.0/",
-					"$(HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
-					"$(HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
-				);
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../c74support/jit-includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../c74support/jit-includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../c74support/max-includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_4 = "\"$(SRCROOT)/../c74support/max-includes\"";
-				HEADER_SEARCH_PATHS_QUOTED_FOR_TARGET_5 = "\"$(SRCROOT)/../libusb/libusb\"";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = /build/deployment/;
-				LIBRARY_SEARCH_PATHS = (
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_4)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_5)",
-					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_6)",
-				);
-				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/lib\"";
-				LIBRARY_STYLE = Bundle;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-Wl",
-					"-search_paths_first",
-					"-lmx",
-					"$(OTHER_LDFLAGS_QUOTED_FOR_TARGET_1)",
-				);
-				OTHER_LDFLAGS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../libfreenect/xcode/lib/Release/libfreenect.a\"";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = jit.freenect.grab;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
-				SECTORDER_FLAGS = "";
-				USER_HEADER_SEARCH_PATHS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = mxo;
-				ZERO_LINK = NO;
 			};
 			name = Deployment;
 		};
-		0FF65FF5096B38E400E9E0B4 /* Development */ = {
+		2FBBEAE108F335360078DB84 /* Development */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5E01D7F1B792705006AB23F /* maxmspsdk.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
-				USER_HEADER_SEARCH_PATHS = "../../c74support/**";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../c74support/jit-includes\"",
+				);
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_LDFLAGS = "$(C74_SYM_LINKER_FLAGS)";
 			};
 			name = Development;
 		};
-		0FF65FF6096B38E400E9E0B4 /* Deployment */ = {
+		2FBBEAE208F335360078DB84 /* Deployment */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5E01D7F1B792705006AB23F /* maxmspsdk.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
-				USER_HEADER_SEARCH_PATHS = "../../c74support/**";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../c74support/jit-includes\"",
+				);
+				OTHER_LDFLAGS = "$(C74_SYM_LINKER_FLAGS)";
 			};
 			name = Deployment;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0FF65FF0096B38E400E9E0B4 /* Build configuration list for PBXNativeTarget "jit.freenect.grab" */ = {
+		2FBBEACF08F335010078DB84 /* Build configuration list for PBXProject "max.jit.freenect.grab" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0FF65FF1096B38E400E9E0B4 /* Development */,
-				0FF65FF2096B38E400E9E0B4 /* Deployment */,
+				2FBBEAD008F335010078DB84 /* Development */,
+				2FBBEAD108F335010078DB84 /* Deployment */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Development;
 		};
-		0FF65FF4096B38E400E9E0B4 /* Build configuration list for PBXProject "max.jit.freenect.grab" */ = {
+		2FBBEAE008F335360078DB84 /* Build configuration list for PBXNativeTarget "max-external" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0FF65FF5096B38E400E9E0B4 /* Development */,
-				0FF65FF6096B38E400E9E0B4 /* Deployment */,
+				2FBBEAE108F335360078DB84 /* Development */,
+				2FBBEAE208F335360078DB84 /* Deployment */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Development;
