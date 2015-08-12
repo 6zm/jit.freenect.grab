@@ -38,7 +38,7 @@
 // TODO: always check log level before release:
 #define JIT_FREENECT_LOG_LEVEL	FREENECT_LOG_DEBUG
 //FREENECT_LOG_FLOOD
-#define NESADEBUG
+//#define NESADEBUG
 
 #ifdef NESADEBUG
 #   define postNesa(fmt, ...) cpost((fmt), ##__VA_ARGS__);
