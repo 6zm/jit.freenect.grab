@@ -25,14 +25,15 @@
 #include "libfreenect.h"
 #include "freenect_internal.h"
 #include <time.h>
-
+#warning is the depth/rgb size correct? one of them is not 640x480
 #define DEPTH_WIDTH 640
 #define DEPTH_HEIGHT 480
+#define DEPTH_BPP 4 // bytes per pixel
 #define RGB_WIDTH 640
 #define RGB_HEIGHT 480
+#define RGB_BPP 3 // bytes per pixel
 #define MAX_DEVICES 8
-#define CLOUD_SIZE (DEPTH_WIDTH+2)*DEPTH_HEIGHT*2
-#define CLOUD_BLOCK 640
+
 #define DISTANCE_THRESH 10.f * 10.f
 
 // TODO: always check log level before release:
@@ -56,9 +57,6 @@
 
 #define DEBUG_TIMESTAMP __DATE__" "__TIME__"\x0"
 
-typedef float float4[4];
-#define mult_scalar_float4(a,b,c) {int vector_iterator; for(vector_iterator=0;vector_iterator<4;vector_iterator++)c[vector_iterator] = a[vector_iterator] * b;}
-
 typedef union _lookup_data{
 	long *l_ptr;
 	float *f_ptr;
@@ -72,33 +70,11 @@ enum thread_mess_type{
 	TERMINATE
 };
 
-typedef struct _point3D{
-	float x;
-	float y;
-	float z;
-	float tex_x;
-	float tex_y;
-	float nx;
-	float ny;
-	float nz;
-	float r;
-	float g;
-	float b;
-	float a;
-} t_point3D;
-
-typedef struct _cloud{
-	t_point3D *points;
-	uint32_t count;
-	uint32_t size;
-	t_point3D *last;
-} t_cloud;
-
 typedef struct _jit_freenect_grab
 {
 	t_object         ob;
 	char             unique;
-	char				aligndepth;
+	char             aligndepth;
 	char             mode;
 	float            threshold;
 	char             has_frames;
@@ -127,7 +103,6 @@ typedef struct _jit_freenect_grab
 	char             have_depth_frames;
 	char             have_rgb_frames;
 	char             clear_depth;
-	t_cloud          cloud;
 	t_symbol         *type;
 	float            *rgb;
 	freenect_raw_tilt_state *state;
@@ -156,10 +131,6 @@ t_symbol *s_rgb, *s_RGB;
 t_symbol *s_ir, *s_IR;
 
 //int object_count = 0;
-
-float xlut[640];
-float ylut[480];
-
 
 int global_id;
 
@@ -422,7 +393,6 @@ t_jit_err jit_freenect_grab_init(void)
 	t_jit_object *attr;
 	t_jit_object *mop,*output;
 	t_atom a[4];
-	int i;
 	
 	global_id=0;
 	x_systhread = NULL;
@@ -536,17 +506,6 @@ t_jit_err jit_freenect_grab_init(void)
 	
 	jit_class_register(_jit_freenect_grab_class);
 	
-	//Prepare lut for OpenGL output
-	
-	for(i=0;i<640;i++){
-		xlut[i] = 0.542955699638437f * (((float)i - 319.5f) / 319.5f);
-	}
-	
-	for(i=0;i<480;i++){
-		ylut[i] = -0.393910475614942f * (((float)i - 239.5f) / 239.5f);
-	}
-	
-
 	post("jit.freenect.grab: Copyright 2010, Jean-Marc Pelletier, Nenad Popov and Andrew Roth. Built on %s",DEBUG_TIMESTAMP);
 	return JIT_ERR_NONE;
 }
@@ -569,9 +528,6 @@ t_jit_freenect_grab *jit_freenect_grab_new(void)
 		x->tilt = 0;
 		x->state = NULL;
 		x->clear_depth = 0;
-		x->cloud.points = NULL;
-		x->cloud.count = 0;
-		x->cloud.size = 0;
 		x->type = NULL;
 		x->threshold = 2.f;
 		x->rgb = NULL;
@@ -590,12 +546,12 @@ t_jit_freenect_grab *jit_freenect_grab_new(void)
 		x->depth_back=NULL;
 		
 		
-		x->depth_back = (uint16_t*)malloc(640*480*4);
-		x->depth_mid = (uint16_t*)malloc(640*480*4);
-		x->depth_front = (uint16_t*)malloc(640*480*4);
-		x->rgb_back = (uint8_t*)malloc(640*480*3);
-		x->rgb_mid = (uint8_t*)malloc(640*480*3);
-		x->rgb_front = (uint8_t*)malloc(640*480*3);
+		x->depth_back = (uint16_t*)malloc(DEPTH_WIDTH*DEPTH_HEIGHT*DEPTH_BPP);
+		x->depth_mid = (uint16_t*)malloc(DEPTH_WIDTH*DEPTH_HEIGHT*DEPTH_BPP);
+		x->depth_front = (uint16_t*)malloc(DEPTH_WIDTH*DEPTH_HEIGHT*DEPTH_BPP);
+		x->rgb_back = (uint8_t*)malloc(RGB_WIDTH*RGB_HEIGHT*RGB_BPP);
+		x->rgb_mid = (uint8_t*)malloc(RGB_WIDTH*RGB_HEIGHT*RGB_BPP);
+		x->rgb_front = (uint8_t*)malloc(RGB_WIDTH*RGB_HEIGHT*RGB_BPP);
 		
 		x->is_open=FALSE;
 		x->id=++global_id;
